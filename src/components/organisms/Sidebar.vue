@@ -19,6 +19,11 @@
                     to="/bookings"
                     icon="bookmark-multiple-outline" 
                     label="Bookings"></b-menu-item>
+                <b-menu-item 
+                    tag="router-link"
+                    to="/"
+                    icon="home" 
+                    label="Home"></b-menu-item>
             </b-menu-list>
         </b-menu>
     </b-sidebar>
