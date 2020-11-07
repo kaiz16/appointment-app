@@ -1,26 +1,28 @@
 <template>
   <div>
     <p class="title">Setting events in here</p>
-    <b-field label="Class Name">
-      <b-input v-model="name" placeholder="Type Class Name"></b-input>
-    </b-field>
-    <b-field label="Description">
-      <b-input
-        v-model="description"
-        maxlength="200"
-        type="textarea"
-        placeholder="Your appointment form description"
-      ></b-input>
-    </b-field>
-    <b-field label="Your Appointment Form URL">
-      <b-input v-model="url" placeholder="Change Your Custom URL"></b-input>
-    </b-field>
-    <b-field label="Custom URL">
-      <b-input
-        v-model="customUrl"
-        placeholder="Change Your Custom URL"
-      ></b-input>
-    </b-field>
+    <div class="column is-7">
+      <b-field label="Class Name">
+        <b-input v-model="name" placeholder="Type Class Name"></b-input>
+      </b-field>
+      <b-field label="Description">
+        <b-input
+          v-model="description"
+          maxlength="200"
+          type="textarea"
+          placeholder="Your appointment form description"
+        ></b-input>
+      </b-field>
+      <b-field label="Your Appointment Form URL">
+        <b-input v-model="url" placeholder="Change Your Custom URL"></b-input>
+      </b-field>
+      <b-field label="Custom URL">
+        <b-input
+          v-model="customUrl"
+          placeholder="Change Your Custom URL"
+        ></b-input>
+      </b-field>
+    </div>
     <b-field label="Available Hours">
       <div class="column is-3">
         <b-datepicker placeholder="Click to select..." v-model="dates" multiple>
@@ -57,7 +59,7 @@
         Require Marketing Agreement
       </b-switch>
     </div>
-    <div class="column is-6">
+    <div class="column is-7">
       <b-field label="Short Text">
         <b-input v-model="shorttext" placeholder="I Agree to ......"></b-input>
       </b-field>
@@ -69,6 +71,16 @@
           placeholder="Full Text Of Term And Conditions..."
         ></b-input>
       </b-field>
+      <b-field label="Location">
+        <b-select placeholder="Select session location" expanded>
+          <option value="flint">In-Person Meeting</option>
+          <option value="silver">Zoom</option>
+        </b-select> </b-field
+      ><br />
+      <div class="buttons">
+        <b-button type="is-link">Save</b-button>
+        <b-button>Cancel</b-button><br />
+      </div>
     </div>
   </div>
 </template>
