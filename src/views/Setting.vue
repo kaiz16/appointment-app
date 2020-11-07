@@ -5,7 +5,43 @@
       <b-input v-model="name" placeholder="Type Class Name"></b-input>
     </b-field>
     <b-field label="Description">
-      <b-input maxlength="200" type="textarea" placeholder="Your appointment form description"></b-input>
+      <b-input
+        v-model="description"
+        maxlength="200"
+        type="textarea"
+        placeholder="Your appointment form description"
+      ></b-input>
+    </b-field>
+    <b-field label="Your Appointment Form URL">
+      <b-input v-model="url" placeholder="Change Your Custom URL"></b-input>
+    </b-field>
+    <b-field label="Custom URL">
+      <b-input
+        v-model="customUrl"
+        placeholder="Change Your Custom URL"
+      ></b-input>
+    </b-field>
+    <b-field label="Available Hours">
+      <div class="column is-2">
+        <b-datepicker placeholder="Click to select..." v-model="dates" multiple>
+        </b-datepicker>
+      </div>
+      <div class="column is-2">
+        <b-timepicker
+          placeholder="Click to select..."
+          :min-time="minTime"
+          :max-time="maxTime"
+        >
+        </b-timepicker>
+      </div>
+      <div class="column is-2">
+        <b-timepicker
+          placeholder="Click to select..."
+          :min-time="minTime"
+          :max-time="maxTime"
+        >
+        </b-timepicker>
+      </div>
     </b-field>
   </div>
 </template>
@@ -14,11 +50,14 @@
 export default {
   data() {
     return {
-      name: ""
+      name: "",
+      description: "",
+      url: "https://taskeo.co/a/my-class",
+      customUrl: "my-class",
+      dates: [],
     };
-  }
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>
