@@ -1,33 +1,39 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Bookings from '../views/Bookings.vue'
-import CreateEvent from '../views/CreateEvent.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import Bookings from "../views/Bookings.vue";
+import CreateEvent from "../views/CreateEvent.vue";
+import Setting from "../views/Setting.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/",
+    name: "Home",
+    component: Home,
   },
   {
-    path: '/bookings',
-    name: 'Bookings',
-    component: Bookings
+    path: "/bookings",
+    name: "Bookings",
+    component: Bookings,
   },
   {
-    path: '/newbooking',
-    name: 'CreateEvent',
-    component: CreateEvent
+    path: "/newbooking",
+    name: "CreateEvent",
+    component: CreateEvent,
   },
-]
+  {
+    path: "/setting",
+    name: "Setting",
+    component: Setting,
+  },
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

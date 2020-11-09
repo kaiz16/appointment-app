@@ -1,5 +1,6 @@
 <template>
   <div>
+    <navbar></navbar>
     <sidebar></sidebar>
     <div id="content-view">
       <router-view/>
@@ -7,11 +8,13 @@
   </div>
 </template>
 <script>
+import Navbar from './components/organisms/Navbar.vue'
 import Sidebar from './components/organisms/Sidebar.vue'
 
 export default {
   components: {
     'sidebar': Sidebar,
+    'navbar': Navbar,
   }
 }
 </script>
