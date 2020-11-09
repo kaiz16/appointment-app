@@ -14,7 +14,7 @@
     <div class="columns">
       <div class="column is-half">
 
-    <b-field grouped group-multiline>
+    <b-field grouped group-multiline>ddfj
       <b-field label="Locale">
         <b-select v-model="locale">
           <option :value="undefined"></option>

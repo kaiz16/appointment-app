@@ -8,9 +8,10 @@
 </template>
 <script>
 import Sidebar from './components/organisms/Sidebar.vue'
+
 export default {
   components: {
-    'sidebar': Sidebar
+    'sidebar': Sidebar,
   }
 }
 </script>
