@@ -4,19 +4,25 @@
     :fullheight="true"
     :mobile="false"
     :can-cancel="false"
-    type="is-primary"
+    type="is-white"
     open
   >
     <b-menu>
       <b-menu-list>
-        <b-menu-item tag="router-link" to="/newbooking" icon="calendar-month" label="Create Events"></b-menu-item>
         <b-menu-item
           tag="router-link"
-          to="/bookings"
+          :active="$route.name == 'Bookings'"
+          :to="{name: 'Bookings'}"
+          cus
           icon="bookmark-multiple-outline"
           label="Bookings"
         ></b-menu-item>
-        <b-menu-item tag="router-link" to="/setting" icon="cog-outline" label="Setting"></b-menu-item>
+        <b-menu-item 
+          tag="router-link" 
+          :to="{name: 'Setting'}"
+          :active="$route.name == 'Setting'"
+          icon="cog-outline" 
+          label="Setting"></b-menu-item>
       </b-menu-list>
     </b-menu>
   </b-sidebar>
@@ -25,6 +31,3 @@
 <script>
 export default {};
 </script>
-
-<style>
-</style>
