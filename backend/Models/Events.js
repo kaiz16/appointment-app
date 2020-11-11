@@ -5,11 +5,11 @@ const timeSchema = new mongoose.Schema({
     endTime: { type: String, default: "1730"},
 })
 const scheduleSchema = new mongoose.Schema({
-    Monday: { type: [timeSchema], default: () => ({}) },
-    Tuesday: { type: [timeSchema], default: () => ({}) },
-    Wednesday: { type: [timeSchema], default: () => ({}) },
-    Thursday: { type: [timeSchema], default: () => ({}) },
-    Friday: { type: [timeSchema], default: () => ({}) }
+    Monday: { type: [timeSchema], default: () => ([{}])},
+    Tuesday: { type: [timeSchema], default: () => ([{}])},
+    Wednesday: { type: [timeSchema], default: () => ([{}])},
+    Thursday: { type: [timeSchema], default: () => ([{}])},
+    Friday: { type: [timeSchema], default: () => ([{}])}
 })
 const events = mongoose.model('Events', 
     new mongoose.Schema({
