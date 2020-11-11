@@ -1,8 +1,10 @@
 const events = require('./Events')
 const users = require('./User')
 const bookings = require('./Bookings')
+const sessions = require('./Sessions')
 module.exports = {
-    events,
     users,
-    bookings
+    events,
+    bookings,
+    sessions
 }

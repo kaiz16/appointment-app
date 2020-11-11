@@ -1,21 +1,15 @@
 const mongoose = require('mongoose')
-// Constructing the model of user schema.
-const setDefault = () => {
-    const date = new Date
-    date.setHours(10, 0)
-    return date.getHours()
-}
-
+// Constructing the model of event schema.
 const timeSchema = new mongoose.Schema({
     startTime: { type: String, default: "1030"},
     endTime: { type: String, default: "1730"},
 })
 const scheduleSchema = new mongoose.Schema({
-    Monday: { type: timeSchema, default: () => ({}) },
-    Tuesday: { type: timeSchema, default: () => ({}) },
-    Wednesday: { type: timeSchema, default: () => ({}) },
-    Thursday: { type: timeSchema, default: () => ({}) },
-    Friday: { type: timeSchema, default: () => ({}) }
+    Monday: { type: [timeSchema], default: () => ({}) },
+    Tuesday: { type: [timeSchema], default: () => ({}) },
+    Wednesday: { type: [timeSchema], default: () => ({}) },
+    Thursday: { type: [timeSchema], default: () => ({}) },
+    Friday: { type: [timeSchema], default: () => ({}) }
 })
 const events = mongoose.model('Events', 
     new mongoose.Schema({
