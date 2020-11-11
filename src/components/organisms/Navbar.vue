@@ -1,5 +1,5 @@
 <template>
-    <b-navbar>
+    <b-navbar shadow>
         <template slot="end">
             <b-navbar-item tag="div">
                 <div class="buttons">
