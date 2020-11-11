@@ -1,8 +1,21 @@
 <template>
 <div class="column is-mobile is-centered is-6">
-  <div class="level-right">
-<b-button>+ New</b-button>
-  </div>
+  <!--<div class="buttons level-right"> -->
+    <button class="button is-primary is-medium"
+                @click="isImageModalActive = true">
+                + New
+            </button>
+            <b-modal 
+            v-model="isComponentModalActive"
+            has-modal-card
+            trap-focus
+            :destroy-on-hide="false"
+            aria-role="dialog"
+            aria-modal>
+            <template #default="props">
+                <modal-form v-bind="formProps" @close="props.close"></modal-form>
+            </template>
+        </b-modal>
       <div class="table">
         <b-table :data="data" :columns="columns"></b-table>
       </div>
@@ -29,9 +42,44 @@
 </template>
 
 <script>
+    const ModalForm = {
+        props: ['moduleName'],
+        template: `
+            <form action="">
+                <div class="modal-card" style="width: auto">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Add New</p>
+                        <button
+                            type="button"
+                            class="delete"
+                            @click="$emit('close')"/>
+                    </header>
+                    <section class="modal-card-body">
+                        <b-field label="Module Name">
+                            <b-input
+                                type="moduleName"
+                                :value="moduleName"
+                                placeholder="Module Name"
+                                required>
+                            </b-input>
+                        </b-field>
+
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button" type="button" @click="$emit('close')">Close</button>
+                        <button class="button is-primary">Save</button>
+                    </footer>
+                </div>
+            </form>
+        `
+    }
+
     export default {
       name: 'Home',
 
+      components: {
+        ModalForm
+      },
         data() {
             return {
                 data: [
