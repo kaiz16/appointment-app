@@ -2,9 +2,14 @@
 const router = require("express").Router();
 const Schema = require("../Models");
 
-// Getting the sessions by eventsId (In Bookings - Side Bar)
-
-// Getting the sessions by date (In Calender - Side Bar)
+// Getting the sessions by bookingId (In Bookings - Side Bar)
+router.get("/", (req, res) => {
+  Schema.sessions
+    .find({
+      bookingId: req.body.bookingId,
+    })
+    .then((sessions) => res.json(sessions));
+});
 
 // Creating an session from scheduleSchema (Looping, Limit to ? Months/Years)
 router.post("/create", (req, res) => {

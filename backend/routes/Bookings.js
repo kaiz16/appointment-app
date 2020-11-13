@@ -5,7 +5,7 @@ const Schema = require("../Models");
 router.get("/", (req, res) => {
   Schema.bookings
     .find({
-      eventId: req.body.id,
+      eventId: req.body.eventId,
     })
     .then((bookings) => res.json(bookings));
 });
