@@ -27,4 +27,22 @@ router.post("/create", (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
+// Deleting the sessions by the booking id
+router.delete("/delete", async (req, res) => {
+  await Schema.sessions
+    .findOneAndDelete({
+      bookingId: req.body.bookingId,
+    })
+    .exec((err, post) => {
+      if (err)
+        return res.status(500).json({
+          code: 500,
+          message: "There was an error deleting the post",
+          error: err,
+        });
+      res
+        .status(200)
+        .json({ code: 200, message: "Post deleted", deletedPost: post });
+    });
+});
 module.exports = router;

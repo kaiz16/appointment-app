@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongoose");
 const mongoose = require("mongoose");
 // Constructing the model of event schema.
 const timeSchema = new mongoose.Schema({
