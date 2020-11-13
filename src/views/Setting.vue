@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <p class="title">Setting events in here</p>
+  <div class="main">
+    <h1 class="title">Setting events in here</h1>
+
     <div class="column is-7">
       <b-field label="Class Name">
         <b-input v-model="name" placeholder="Type Class Name"></b-input>
@@ -23,29 +24,36 @@
         ></b-input>
       </b-field>
     </div>
-    <b-field label="Available Hours">
-      <div class="column is-3">
-        <b-datepicker placeholder="Click to select..." v-model="dates" multiple>
-        </b-datepicker>
-      </div>
-      <div class="column is-3">
-        <b-timepicker
-          placeholder="Click to select..."
-          :min-time="minTime"
-          :max-time="maxTime"
-        >
-        </b-timepicker>
-      </div>
-      <div class="column is-3">
-        <b-timepicker
-          placeholder="Click to select..."
-          :min-time="minTime"
-          :max-time="maxTime"
-        >
-        </b-timepicker>
-      </div>
+
+    <b-field label="Available Datetime">
+     
+        <div class="column is-one-third">
+            <b-datetimepicker
+                placeholder="Type or select a date..."
+                icon="calendar-today"
+                :locale="locale"
+                editable>
+            </b-datetimepicker>
+        </div>
+  
     </b-field>
-    <div class="column is-6">
+
+    
+
+    <b-field label="To">
+     
+        <div class="column is-one-third">
+            <b-datetimepicker
+                placeholder="Type or select a date..."
+                icon="calendar-today"
+                :locale="locale"
+                editable>
+            </b-datetimepicker>
+        </div>
+  
+    </b-field>
+
+    <div class="column is-one-third">
       <b-field label="Duration (Minutes)">
         <b-input
           v-model="duration"
@@ -53,12 +61,14 @@
         ></b-input>
       </b-field>
     </div>
+
     <br />
     <div class="field">
       <b-switch :value="lightMode" type="is-success">
         Require Marketing Agreement
       </b-switch>
     </div>
+
     <div class="column is-7">
       <b-field label="Short Text">
         <b-input v-model="shorttext" placeholder="I Agree to ......"></b-input>
@@ -81,6 +91,7 @@
         <b-button type="is-link">Save</b-button>
         <b-button>Cancel</b-button><br />
       </div>
+      
     </div>
   </div>
 </template>
@@ -103,4 +114,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+  .main {
+    padding-left: 20%;
+  }
+
+</style>
