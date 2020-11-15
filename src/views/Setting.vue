@@ -17,47 +17,36 @@
         <b-input v-model="url" placeholder="Change Your Custom URL"></b-input>
       </b-field>
       <b-field label="Custom URL">
-        <b-input
-          v-model="customUrl"
-          placeholder="Change Your Custom URL"
-        ></b-input>
+        <b-input v-model="customUrl" placeholder="Change Your Custom URL"></b-input>
       </b-field>
     </div>
     <b-field label="Available Hours">
       <div class="column is-3">
-        <b-datepicker placeholder="Click to select..." v-model="dates" multiple>
-        </b-datepicker>
+        <b-select v-model="date" placeholder="Click to select..." expanded>
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+          <option value="Friday">Friday</option>
+          <option value="Saturday">Saturday</option>
+          <option value="Sunday">Sunday</option>
+        </b-select>
       </div>
       <div class="column is-3">
-        <b-timepicker
-          placeholder="Click to select..."
-          :min-time="minTime"
-          :max-time="maxTime"
-        >
-        </b-timepicker>
+        <b-timepicker placeholder="Click to select..." :min-time="minTime" :max-time="maxTime"></b-timepicker>
       </div>
       <div class="column is-3">
-        <b-timepicker
-          placeholder="Click to select..."
-          :min-time="minTime"
-          :max-time="maxTime"
-        >
-        </b-timepicker>
+        <b-timepicker placeholder="Click to select..." :min-time="minTime" :max-time="maxTime"></b-timepicker>
       </div>
     </b-field>
     <div class="column is-6">
       <b-field label="Duration (Minutes)">
-        <b-input
-          v-model="duration"
-          placeholder="How Long Is The Session"
-        ></b-input>
+        <b-input v-model="duration" placeholder="How Long Is The Session"></b-input>
       </b-field>
     </div>
     <br />
     <div class="field">
-      <b-switch :value="lightMode" type="is-success">
-        Require Marketing Agreement
-      </b-switch>
+      <b-switch :value="lightMode" type="is-success">Require Marketing Agreement</b-switch>
     </div>
     <div class="column is-7">
       <b-field label="Short Text">
@@ -75,11 +64,13 @@
         <b-select placeholder="Select session location" expanded>
           <option value="flint">In-Person Meeting</option>
           <option value="silver">Zoom</option>
-        </b-select> </b-field
-      ><br />
+        </b-select>
+      </b-field>
+      <br />
       <div class="buttons">
         <b-button type="is-link">Save</b-button>
-        <b-button>Cancel</b-button><br />
+        <b-button>Cancel</b-button>
+        <br />
       </div>
     </div>
   </div>
@@ -97,9 +88,9 @@ export default {
       duration: "",
       lightMode: true,
       shorttext: "",
-      fulltext: "",
+      fulltext: ""
     };
-  },
+  }
 };
 </script>
 
