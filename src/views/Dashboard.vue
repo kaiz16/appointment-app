@@ -1,12 +1,10 @@
 <template>
-  <div class="mr-0 pt-2">
-    <div class="column is-half">
-      <b-button @click="showNewEventModal">+ New</b-button>
-      <div class="columns is-centered">
-        <div class="mr-0 pt-5">
-          <div class="table">
-            <b-table hoverable @click="showEvent" :data="data" :columns="columns"></b-table>
-          </div>
+  <div class="column is-half">
+    <b-button @click="showNewEventModal">+ New</b-button>
+    <div class="columns is-centered">
+      <div class="mr-0 pt-5">
+        <div class="table">
+          <b-table hoverable @click="showEvent" :data="data" :columns="columns"></b-table>
         </div>
       </div>
     </div>
