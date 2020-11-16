@@ -15,7 +15,7 @@ export default {
   },
   mounted() {
     this.$router.push({
-      name: "Bookings"
+      name: "Dashboard"
     });
   }
 };
