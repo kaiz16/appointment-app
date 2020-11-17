@@ -5,12 +5,7 @@ const bookings = mongoose.model('Bookings',
         eventId: { type: String, required: true, unique: true },
         name: { type: String, required: true },
         email: { type: String, required: true },
-        phone: { type: String },
-        day: { type: Number, required: true, min: 1, max: 31},
-        month: { type: Number, required: true, min: 1, max: 31},
-        year: { type: Number, required: true},
-        hour: { type: Number, required: true, min: 0, max: 23},
-        minutes: { type: Number, required: true, min: 0, max: 59},
+        phone: { type: String }
     },
     {
         timestamps: true
