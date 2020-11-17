@@ -10,13 +10,12 @@ import Register from '../views/Register.vue';
 import { guard } from '../auth' 
 Vue.use(VueRouter);
 
-
 const routes = [
   {
-    path: '*',
+    path: "*",
     redirect: {
-      name: 'Dashboard'
-    }
+      name: "Dashboard",
+    },
   },
   {
     path: "/login",
@@ -29,28 +28,27 @@ const routes = [
     component: Register,
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard,
-    beforeEnter: guard
-  },
-  {
     path: "/event/:id",
     name: "Event",
     component: Event,
     beforeEnter: guard,
     children: [
       {
-        path: 'bookings',
-        name: 'Bookings',
+        path: "dashboard",
+        name: "Dashboard",
+        component: Dashboard,
+      },
+      {
+        path: "bookings",
+        name: "Bookings",
         component: Bookings,
       },
       {
-        path: 'setting',
-        name: 'Setting',
+        path: "setting",
+        name: "Setting",
         component: Setting,
-      }
-    ]
+      },
+    ],
   },
   {
     path: "/bookings",

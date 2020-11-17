@@ -2,28 +2,28 @@
   <div>
     <sidebar></sidebar>
     <div id="event-view">
-      <router-view/>
+      <router-view />
     </div>
   </div>
 </template>
 <script>
-import Sidebar from '@/components/organisms/Sidebar.vue'
+import Sidebar from "@/components/organisms/Sidebar.vue";
 
 export default {
   components: {
-    'sidebar': Sidebar,
+    sidebar: Sidebar
   },
-  mounted(){
-      this.$router.push({
-          name: 'Bookings'
-      })
+  mounted() {
+    this.$router.push({
+      name: "Dashboard"
+    });
   }
-}
+};
 </script>
 <style>
-#event-view{
-    position: relative;
-    left: 270px;
-    padding: 20px;
+#event-view {
+  position: relative;
+  left: 270px;
+  padding: 20px;
 }
 </style>

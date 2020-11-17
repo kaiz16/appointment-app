@@ -18,10 +18,7 @@
         <b-input v-model="url" placeholder="Change Your Custom URL"></b-input>
       </b-field>
       <b-field label="Custom URL">
-        <b-input
-          v-model="customUrl"
-          placeholder="Change Your Custom URL"
-        ></b-input>
+        <b-input v-model="customUrl" placeholder="Change Your Custom URL"></b-input>
       </b-field>
     </div>
 
@@ -64,9 +61,7 @@
 
     <br />
     <div class="field">
-      <b-switch :value="lightMode" type="is-success">
-        Require Marketing Agreement
-      </b-switch>
+      <b-switch :value="lightMode" type="is-success">Require Marketing Agreement</b-switch>
     </div>
 
     <div class="column is-7">
@@ -85,11 +80,13 @@
         <b-select placeholder="Select session location" expanded>
           <option value="flint">In-Person Meeting</option>
           <option value="silver">Zoom</option>
-        </b-select> </b-field
-      ><br />
+        </b-select>
+      </b-field>
+      <br />
       <div class="buttons">
         <b-button type="is-link">Save</b-button>
-        <b-button>Cancel</b-button><br />
+        <b-button>Cancel</b-button>
+        <br />
       </div>
       
     </div>
@@ -108,9 +105,9 @@ export default {
       duration: "",
       lightMode: true,
       shorttext: "",
-      fulltext: "",
+      fulltext: ""
     };
-  },
+  }
 };
 </script>
 
