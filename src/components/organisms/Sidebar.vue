@@ -11,6 +11,14 @@
       <b-menu-list>
         <b-menu-item
           tag="router-link"
+          :active="$route.name == 'Dashboard'"
+          :to="{name: 'Dashboard'}"
+          cus
+          icon="menu"
+          label="Dashboard"
+        ></b-menu-item>
+        <b-menu-item
+          tag="router-link"
           :active="$route.name == 'Bookings'"
           :to="{name: 'Bookings'}"
           cus
@@ -25,6 +33,7 @@
           label="Setting"></b-menu-item>
       </b-menu-list>
     </b-menu>
+    
   </b-sidebar>
 </template>
 

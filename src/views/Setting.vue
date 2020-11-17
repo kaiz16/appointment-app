@@ -53,11 +53,11 @@
   
     </b-field>
 
-    <div class="column is-one-third">
+    <div class="column is-2">
       <b-field label="Duration (Minutes)">
         <b-input
           v-model="duration"
-          placeholder="How Long Is The Session"
+          placeholder="Length of Session"
         ></b-input>
       </b-field>
     </div>
@@ -116,7 +116,7 @@ export default {
 
 <style>
   .main {
-    padding-left: 20%;
+    padding-left: 10%;
   }
 
 </style>
