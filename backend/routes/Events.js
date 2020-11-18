@@ -43,7 +43,13 @@ router.delete("/delete/:id", async (req, res) => {
 router.put("/update/:id", async (req, res) => {
   await Schema.events.findByIdAndUpdate(
     { _id: req.params.id },
-    { $set: { title: req.body.title } },
+    {
+      $set: {
+        title: req.body.title,
+        schedules: req.body.schedules,
+        duration: req.body.duration,
+      },
+    },
     (err, post) => {
       if (err)
         return res.status(500).json({
