@@ -24,7 +24,7 @@ router.post("/create", (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
-// Deleting the event by the event id
+// Deleting the event by the event _id
 router.delete("/delete/:id", async (req, res) => {
   await Schema.events.findByIdAndRemove({ _id: req.params.id }, (err, post) => {
     if (err)
@@ -39,7 +39,7 @@ router.delete("/delete/:id", async (req, res) => {
   });
 });
 
-// Editing/Updataing the event by the event id
+// Editing/Updataing the event by the event _id
 router.put("/update/:id", async (req, res) => {
   await Schema.events.findByIdAndUpdate(
     { _id: req.params.id },
