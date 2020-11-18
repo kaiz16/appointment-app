@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const Schema = require("../Models");
-const mongodb = require("mongodb");
 
 // Getting the events by user
 router.get("/", (req, res) => {
@@ -42,16 +41,23 @@ router.delete("/delete/:id", async (req, res) => {
 
 // Editing/Updataing the event by the event id
 router.put("/update/:id", async (req, res) => {
-  Schema.events.findByIdAndUpdate(req.params.id, (err, event) => {
-    if (err) {
-      return res.status(400).json(err);
+  await Schema.events.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $set: { title: req.body.title } },
+    (err, post) => {
+      if (err)
+        return res.status(500).json({
+          code: 500,
+          message: "There was an error updating the post",
+          error: err,
+        });
+      res.status(200).json({
+        code: 200,
+        message: "Post updated",
+        deletedPost: post,
+      });
     }
-    event.title = req.body.title;
-    event.save((err) => {
-      if (err) return res.status(400).json(err);
-      res.json(event);
-    });
-  });
+  );
 });
 
 module.exports = router;
