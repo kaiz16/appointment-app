@@ -45,4 +45,52 @@ router.delete("/delete", async (req, res) => {
         .json({ code: 200, message: "Post deleted", deletedPost: post });
     });
 });
+
+// Deleting the sessions by the _id
+router.delete("/delete/:id", async (req, res) => {
+  await Schema.sessions.findByIdAndRemove(
+    { _id: req.params.id },
+    (err, post) => {
+      if (err)
+        return res.status(500).json({
+          code: 500,
+          message: "There was an error deleting the post",
+          error: err,
+        });
+      res
+        .status(200)
+        .json({ code: 200, message: "Post deleted", deletedPost: post });
+    }
+  );
+});
+
+// Editing/Updataing the sessions by the _id
+router.put("/update/:id", async (req, res) => {
+  await Schema.sessions.findByIdAndUpdate(
+    { _id: req.params.id },
+    {
+      $set: {
+        day: req.body.day,
+        month: req.body.month,
+        year: req.body.year,
+        hour: req.body.hour,
+        minutes: req.body.minutes,
+      },
+    },
+    (err, post) => {
+      if (err)
+        return res.status(500).json({
+          code: 500,
+          message: "There was an error updating the post",
+          error: err,
+        });
+      res.status(200).json({
+        code: 200,
+        message: "Post updated",
+        deletedPost: post,
+      });
+    }
+  );
+});
+
 module.exports = router;
