@@ -26,22 +26,32 @@ router.post("/create", (req, res) => {
 });
 
 // Deleting the event by the event id
-router.delete("/delete", async (req, res) => {
-  await Schema.events
-    .deleteOne({
-      _id: mongoose.Types.ObjectId(req.body.id),
-    })
-    .exec((err, post) => {
-      if (err)
-        return res.status(500).json({
-          code: 500,
-          message: "There was an error deleting the post",
-          error: err,
-        });
-      res
-        .status(200)
-        .json({ code: 200, message: "Post deleted", deletedPost: post });
+router.delete("/delete/:id", async (req, res) => {
+  await Schema.events.findByIdAndRemove({ _id: req.params.id }, (err, post) => {
+    if (err)
+      return res.status(500).json({
+        code: 500,
+        message: "There was an error deleting the post",
+        error: err,
+      });
+    res
+      .status(200)
+      .json({ code: 200, message: "Post deleted", deletedPost: post });
+  });
+});
+
+// Editing/Updataing the event by the event id
+router.put("/update/:id", async (req, res) => {
+  Schema.events.findByIdAndUpdate(req.params.id, (err, event) => {
+    if (err) {
+      return res.status(400).json(err);
+    }
+    event.title = req.body.title;
+    event.save((err) => {
+      if (err) return res.status(400).json(err);
+      res.json(event);
     });
+  });
 });
 
 module.exports = router;
