@@ -30,8 +30,8 @@
             tag="router-link"
             :to="{name: 'ClientPortal'}"
             :active="$route.name == 'ClientPortal'"
-            icon="cog-outline"
-            label="ClientPortal"
+            icon="account"
+            label="Client Portal"
           ></b-menu-item>
         </b-menu-list>
       </section>
