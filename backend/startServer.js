@@ -16,7 +16,6 @@ function startServer() {
   app.use("/api/users", verifyToken, require("./routes/Users"));
   app.use("/api/bookings", verifyToken, require("./routes/Bookings"));
   app.use("/api/events", verifyToken, require("./routes/Events"));
-  app.use("/api/sessions", verifyToken, require("./routes/Sessions"));
 
   const port = process.env.PORT || 5000;
   // If the port.env exist will use that else use 5000

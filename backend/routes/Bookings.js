@@ -1,46 +1,57 @@
-const router = require("express").Router();
-const Schema = require("../Models");
-
+const router = require('express').Router()
+const Schema = require('../Models')
+const { getAvailableTimes } = require('./eventHelpers')
 // Getting the bookings by the event id
-router.get("/", (req, res) => {
-  Schema.bookings
-    .find({
-      eventId: req.body.eventId,
-    })
-    .then((bookings) => res.json(bookings));
-});
+router.get('/:eventId', (req, res) => {
+    console.log(req.body)
+    Schema.bookings.find({
+        eventId: req.params.eventId
+    }).then(bookings => res.json(bookings))
+})
 
-// Deleting the bookings by the event id
-router.delete("/delete", (req, res) => {
-  Schema.bookings
-    .findOneAndDelete({
-      eventId: req.body.eventId,
-    })
-    .exec((err, post) => {
-      if (err)
-        return res.status(500).json({
-          code: 500,
-          message: "There was an error deleting the post",
-          error: err,
-        });
-      res
-        .status(200)
-        .json({ code: 200, message: "Post deleted", deletedPost: post });
-    });
-});
+router.post('/create', async (req, res) => {
+    // Find the event
+    try {
+        const event = await Schema.events.findById(req.body.eventId)
+        const availableTimes = getAvailableTimes(event, req.body.day, req.body.month, req.body.year)
 
-// Creating new booking
-router.post("/create", async (req, res) => {
-  const newBooking = new Schema.bookings({
-    eventId: req.body.eventId,
-    name: req.body.name,
-    email: req.body.email,
-    phone: req.body.phone,
-  });
-  newBooking
-    .save()
-    .then((booking) => res.json(booking))
-    .catch((err) => res.status(400).json(err));
-});
+        let hour = req.body.hour
+        let minutes = req.body.minutes
 
-module.exports = router;
+        // conversions
+        
+        if (hour < 10){
+            hour = `0${req.body.hour}`
+        }
+
+        if (minutes < 10){
+            minutes = `0${req.body.minutes}`
+        }
+
+        const preferredTime = `${hour}${minutes}`
+        if (!availableTimes.includes(preferredTime)){
+            throw "Not available"
+        }
+        
+        const newBooking = new Schema.bookings({
+            eventId: req.body.eventId,
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            day: req.body.day,
+            month: req.body.month,
+            year: req.body.year,
+            hour: req.body.hour,
+            minutes: req.body.minutes
+        })
+
+        newBooking.save().then(booking => res.json(booking))
+        .catch(err => res.status(400).json(err))
+
+    } catch (error) {
+        return res.status(400).json(error)
+    }
+})
+
+module.exports = router
+
