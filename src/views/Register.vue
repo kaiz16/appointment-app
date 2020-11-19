@@ -2,7 +2,7 @@
 <footer>
     <div class="container">
         <div class="column is-half is-offset-one-quarter">
-            <div class="column is-two-fifths">
+            <div class="column is-two-thirds">
                 <div class="border">
                     <b-field label="Full Name">
                         <b-input v-modal="fullname" value=""></b-input>
