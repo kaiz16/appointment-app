@@ -1,87 +1,91 @@
 <template>
   <section class="section">
-    <div class="meta-section">
-      <div class="columns is-multiline">
-        <div class="column is-three-quarters">
-          <b-field label="Class Name" type="is-dark">
-            <b-input v-model="clonedEvent.title" placeholder="Type Class Name"></b-input>
-          </b-field>
-        </div>
+    <div id="setting">
+      <navbar></navbar>
+      <div class="meta-section">
+        <div class="columns is-multiline">
+          <div class="column is-three-quarters">
+            <b-field label="Class Name" type="is-dark">
+              <b-input v-model="clonedEvent.title" placeholder="Type Class Name"></b-input>
+            </b-field>
+          </div>
 
-        <div class="column is-three-quarters">
-          <b-field label="Your Appointment Form URL" type="is-dark">
-            <b-input v-model="clonedEvent._id" placeholder="Change Your Custom URL"></b-input>
-          </b-field>
-        </div>
+          <div class="column is-three-quarters">
+            <b-field label="Your Appointment Form URL" type="is-dark">
+              <b-input v-model="clonedEvent._id" placeholder="Change Your Custom URL"></b-input>
+            </b-field>
+          </div>
 
-        <div class="column is-three-quarters">
-          <b-field label="Description" type="is-dark">
-            <b-input
-              v-model="clonedEvent.description"
-              maxlength="200"
-              type="textarea"
-              placeholder="Your appointment form description"
-            ></b-input>
-          </b-field>
+          <div class="column is-three-quarters">
+            <b-field label="Description" type="is-dark">
+              <b-input
+                v-model="clonedEvent.description"
+                maxlength="200"
+                type="textarea"
+                placeholder="Your appointment form description"
+              ></b-input>
+            </b-field>
+          </div>
         </div>
       </div>
+
+      <div class="schedules-section" style="width: 1000px">
+        <p class="title is-6" style="margin-bottom: 0">Available Hours</p>
+        <div class="columns is-vcentered" v-for="day in currentSchedules" :key="day.label">
+          <div class="column is-2">
+            <b-checkbox v-model="day.enabled" type="is-dark">
+              <p class="title is-6">{{day.label}}</p>
+            </b-checkbox>
+          </div>
+          <div class="column is-narrow">
+            <b-field label="Start time" type="is-dark">
+              <b-timepicker v-model="day.startTime" placeholder="Click to select..."></b-timepicker>
+            </b-field>
+          </div>
+          <div class="column is-narrow">
+            <b-field label="End time" type="is-dark">
+              <b-timepicker v-model="day.endTime" placeholder="Click to select..."></b-timepicker>
+            </b-field>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-narrow">
+            <b-field label="Duration (Minutes)" type="is-dark">
+              <b-input v-model="clonedEvent.duration" placeholder="How Long Is The Session"></b-input>
+            </b-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <div class="columns">
+          <div class="column is-narrow">
+            <b-field label="Meeting type" type="is-dark">
+              <b-select
+                placeholder="Select session location"
+                v-model="clonedEvent.meetingType"
+                expanded
+              >
+                <option value="In Person">In-Person Meeting</option>
+                <option value="Online">Zoom</option>
+              </b-select>
+            </b-field>
+          </div>
+        </div>
+
+        <b-button type="is-dark" @click="saveChanges">Save</b-button>
+      </div>
+      <div class="column is-6" v-if="currentSchedules"></div>
+      <br />
+      <div class="column is-7"></div>
     </div>
-
-    <div class="schedules-section" style="width: 1000px">
-      <p class="title is-6" style="margin-bottom: 0">Available Hours</p>
-      <div class="columns is-vcentered" v-for="day in currentSchedules" :key="day.label">
-        <div class="column is-2">
-          <b-checkbox v-model="day.enabled" type="is-dark">
-            <p class="title is-6">{{day.label}}</p>
-          </b-checkbox>
-        </div>
-        <div class="column is-narrow">
-          <b-field label="Start time" type="is-dark">
-            <b-timepicker v-model="day.startTime" placeholder="Click to select..."></b-timepicker>
-          </b-field>
-        </div>
-        <div class="column is-narrow">
-          <b-field label="End time" type="is-dark">
-            <b-timepicker v-model="day.endTime" placeholder="Click to select..."></b-timepicker>
-          </b-field>
-        </div>
-      </div>
-
-      <div class="columns">
-        <div class="column is-narrow">
-          <b-field label="Duration (Minutes)" type="is-dark">
-            <b-input v-model="clonedEvent.duration" placeholder="How Long Is The Session"></b-input>
-          </b-field>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-section">
-      <div class="columns">
-        <div class="column is-narrow">
-          <b-field label="Meeting type" type="is-dark">
-            <b-select
-              placeholder="Select session location"
-              v-model="clonedEvent.meetingType"
-              expanded
-            >
-              <option value="In Person">In-Person Meeting</option>
-              <option value="Online">Zoom</option>
-            </b-select>
-          </b-field>
-        </div>
-      </div>
-
-      <b-button type="is-dark" @click="saveChanges">Save</b-button>
-    </div>
-    <div class="column is-6" v-if="currentSchedules"></div>
-    <br />
-    <div class="column is-7"></div>
   </section>
 </template>
 
 <script>
 /*eslint-disable*/
+import Navbar from "@/components/organisms/Navbar.vue";
 import axios from "axios";
 import { tokenConfig } from "@/auth";
 export default {
@@ -90,6 +94,9 @@ export default {
       type: Object,
       required: true
     }
+  },
+  components: {
+    navbar: Navbar
   },
   data() {
     return {
@@ -192,4 +199,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.section {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+#event-view {
+  padding: 0 !important;
+}
+.meta-section {
+  padding-top: 0.925rem !important;
+}
+</style>

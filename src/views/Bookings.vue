@@ -1,11 +1,13 @@
 <template>
   <section>
-    <div id="dashboard">
+    <div id="bookings">
       <navbar></navbar>
-      <div class="table">
-        <b-table :data="bookings" :columns="columns"></b-table>
-      </div>
-      <!-- <b-table
+      <div class="columns is-centered" style="padding: 20px">
+        <div class="column is-11">
+          <div class="table">
+            <b-table :data="bookings" :columns="columns"></b-table>
+          </div>
+          <!-- <b-table
             :data="isEmpty ? [] : data"
             :bordered="isBordered"
             :striped="isStriped"
@@ -42,7 +44,9 @@
                 </span>
             </b-table-column>
 
-      </b-table>-->
+          </b-table>-->
+        </div>
+      </div>
     </div>
   </section>
 </template>

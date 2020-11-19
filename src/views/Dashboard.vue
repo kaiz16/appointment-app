@@ -2,7 +2,7 @@
   <div id="dashboard">
     <navbar></navbar>
     <div class="columns is-centered" style="padding: 20px">
-      <div class="column is-half">
+      <div class="column is-10">
         <b-button @click="showNewEventModal">+ New</b-button>
         <div class="table">
           <b-table hoverable @click="showEvent" :data="data" :columns="columns"></b-table>
