@@ -1,21 +1,20 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
-import Event from '../views/Event'
+import Event from "../views/Event";
 import Bookings from "../views/Bookings.vue";
 import Setting from "../views/Setting.vue";
-import Login from '../views/Login'
-import Register from '../views/Register'
-import { guard } from '../auth' 
+import Login from "../views/Login";
+import Register from "../views/Register";
+import { guard } from "../auth";
 Vue.use(VueRouter);
-
 
 const routes = [
   {
-    path: '*',
+    path: "*",
     redirect: {
-      name: 'Dashboard'
-    }
+      name: "Dashboard",
+    },
   },
   {
     path: "/login",
@@ -23,15 +22,15 @@ const routes = [
     component: Login,
   },
   {
-    path: "/login",
-    name: "Login",
+    path: "/register",
+    name: "Register",
     component: Register,
   },
   {
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
-    beforeEnter: guard
+    beforeEnter: guard,
   },
   {
     path: "/event/:id",
@@ -40,17 +39,17 @@ const routes = [
     beforeEnter: guard,
     children: [
       {
-        path: 'bookings',
-        name: 'Bookings',
+        path: "bookings",
+        name: "Bookings",
         component: Bookings,
       },
       {
-        path: 'setting',
-        name: 'Setting',
+        path: "setting",
+        name: "Setting",
         component: Setting,
-        props: true
-      }
-    ]
+        props: true,
+      },
+    ],
   },
 ];
 
