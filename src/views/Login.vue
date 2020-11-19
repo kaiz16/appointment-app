@@ -10,7 +10,8 @@
                 <b-field label="Password">
                     <b-input type="password" v-model="password" password-reveal></b-input>
                 </b-field>
-
+                <a @click="takeMeToRegister">Don't have an account? Register!</a>
+                <br>
                 <b-button @click="login">Submit</b-button>
             </div>
         </div>
@@ -46,6 +47,9 @@ export default {
                 localStorage.setItem("auth-token", data.data.token);
                 this.$router.push("/dashboard");
             }
+        },
+        takeMeToRegister(){
+            this.$router.push('/register')
         }
     }
 };
