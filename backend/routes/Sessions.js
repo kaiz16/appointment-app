@@ -1,2 +1,0 @@
-// create route for sessions
-

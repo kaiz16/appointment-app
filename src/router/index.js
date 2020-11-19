@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import Event from '../views/Event'
 import Bookings from "../views/Bookings.vue";
-// import CreateEvent from "../views/CreateEvent.vue";
 import Setting from "../views/Setting.vue";
 import Login from '../views/Login'
 import Register from '../views/Register'
@@ -49,27 +48,10 @@ const routes = [
         path: 'setting',
         name: 'Setting',
         component: Setting,
+        props: true
       }
     ]
   },
-  // {
-  //   path: "/bookings",
-  //   name: "Bookings",
-  //   component: Bookings,
-  //   beforeEnter: guard
-  // },
-  // {
-  //   path: "/newbooking",
-  //   name: "CreateEvent",
-  //   component: CreateEvent,
-  //   beforeEnter: guard
-  // },
-  // {
-  //   path: "/setting",
-  //   name: "Setting",
-  //   component: Setting,
-  //   beforeEnter: guard
-  // },
 ];
 
 const router = new VueRouter({
