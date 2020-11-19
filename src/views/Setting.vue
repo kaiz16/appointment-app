@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div class="schedules-section">
+    <div class="schedules-section" style="width: 1000px">
       <p class="title is-6" style="margin-bottom: 0">Available Hours</p>
       <div class="columns is-vcentered" v-for="day in currentSchedules" :key="day.label">
         <div class="column is-2">
