@@ -34,8 +34,48 @@
                     Duration:
                     <span class="td" style="font-weight: 600;">30 minutes</span>
                   </p>
+                  <p class="title-time" style="color: rgb(225, 236, 254);">
+                    When:
+                    <span class="tt" style="font-weight: 600;">11:30 AM</span> on
+                    <span class="tt" style="font-weight: 600;">Friday</span> ,
+                    <span class="tt" style="font-weight: 600;">November</span>
+                    <span class="tt" style="font-weight: 600;">20</span> ,
+                    <span class="tt" style="font-weight: 600;">2020</span>
+                  </p>
                 </div>
               </div>
+              <b-dropdown position="is-bottom-left" append-to-body aria-role="menu" trap-focus>
+                <a class="navbar-item" slot="trigger" role="button">
+                  <span>Login</span>
+                  <b-icon icon="menu-down"></b-icon>
+                </a>
+
+                <b-dropdown-item aria-role="menu-item" :focusable="false" custom paddingless>
+                  <form action>
+                    <div class="modal-card" style="width:300px;">
+                      <section class="modal-card-body">
+                        <b-field label="Email">
+                          <b-input type="email" placeholder="Your email" required></b-input>
+                        </b-field>
+
+                        <b-field label="Password">
+                          <b-input
+                            type="password"
+                            password-reveal
+                            placeholder="Your password"
+                            required
+                          ></b-input>
+                        </b-field>
+
+                        <b-checkbox>Remember me</b-checkbox>
+                      </section>
+                      <footer class="modal-card-foot">
+                        <button class="button is-primary">Login</button>
+                      </footer>
+                    </div>
+                  </form>
+                </b-dropdown-item>
+              </b-dropdown>
               <div class="columns" style="height: 455px;">
                 <div class="column is-narrow" style="height: 430px;">
                   <b-datepicker inline v-model="date" :events="events" size="is-medium"></b-datepicker>
@@ -179,13 +219,13 @@ export default {
   padding-left: 0.625rem !important;
   font-size: 1.75rem;
 }
-.title .tl .td {
+.title .tl .td .tt {
   margin: 0 0 0.5rem;
   font-weight: 600;
   margin-bottom: 0.625rem !important;
   margin-top: 0.625rem !important;
 }
-.title-loacation .title-duration {
+.title-loacation .title-duration .title-time {
   padding-left: 0.625rem !important;
 }
 </style>
