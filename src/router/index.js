@@ -7,6 +7,7 @@ import Setting from "../views/Setting.vue";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import ClientPortal from "../views/ClientPortal";
+import ClientConfirmation from "../views/ClientConfirmation";
 import { guard } from "../auth";
 Vue.use(VueRouter);
 
@@ -54,6 +55,11 @@ const routes = [
         path: "clientPortal",
         name: "ClientPortal",
         component: ClientPortal,
+      },
+      {
+        path: "clientConfirmation",
+        name: "ClientConfirmation",
+        component: ClientConfirmation,
       },
     ],
   },

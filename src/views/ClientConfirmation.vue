@@ -34,32 +34,46 @@
                     Duration:
                     <span class="td" style="font-weight: 600;">30 minutes</span>
                   </p>
+                  <p class="title-time" style="color: rgb(225, 236, 254);">
+                    When:
+                    <span class="tt" style="font-weight: 600;">11:30 AM</span> on
+                    <span class="tt" style="font-weight: 600;">Friday</span> ,
+                    <span class="tt" style="font-weight: 600;">November</span>
+                    <span class="tt" style="font-weight: 600;">20</span> ,
+                    <span class="tt" style="font-weight: 600;">2020</span>
+                  </p>
                 </div>
               </div>
-              <div class="columns" style="height: 455px;">
-                <div class="column is-narrow" style="height: 430px;">
-                  <b-datepicker inline v-model="date" :events="events" size="is-medium"></b-datepicker>
+              <div class="name" style="padding: 1rem !important;">
+                <b-field label="Full Name">
+                  <b-input value="" placeholder="Your Fullname"></b-input>
+                </b-field>
+              </div>
+              <div class="email" style="padding: 1rem !important;">
+                <b-field label="Email" type="is-danger" message="This email is invalid">
+                  <b-input type="email" value="" placeholder="Your Emaill" maxlength="30"></b-input>
+                </b-field>
+              </div>
+              <div class="field" style="padding: 1rem !important;">
+                <b-radio
+                  v-model="radio"
+                  native-value="success"
+                  type="is-success"
+                >I agree to receive communication. Click here to read full GDPR and Privacy Policy content.</b-radio>
+              </div>
+              <div class="field" style="padding: 1rem !important;">
+                <b-radio
+                  v-model="radio"
+                  native-value="success"
+                  type="is-success"
+                >I agree to receive communication. Click here to read full Marketing Agreement.</b-radio>
+              </div>
+              <div class="columns" style="padding: 1rem !important; padding-left: 6rem !important;">
+                <div class="column is-1">
+                  <b-button type="is-primary" icon-left="arrow-left-bold-outline" outlined>Back</b-button>
                 </div>
-                <div
-                  class="column is-4"
-                  style="height: 95%; overflow-y: scroll; margin-top: .875rem !important;"
-                >
-                  <div class="buttons">
-                    <b-button type="is-primary" outlined expanded>10:00 AM</b-button>
-                    <b-button type="is-primary" outlined expanded>10:30 AM</b-button>
-                    <b-button type="is-primary" outlined expanded>11:00 AM</b-button>
-                    <b-button type="is-primary" outlined expanded>11:30 AM</b-button>
-                    <b-button type="is-primary" outlined expanded>12:00 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>12:30 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>01:00 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>01:30 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>02:00 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>02:30 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>03:00 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>03:30 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>04:00 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>04:30 PM</b-button>
-                  </div>
+                <div class="column is-5 is-offset-7" style="padding: 1rem !important;">
+                  <b-button type="is-success" icon-right="location-enter" outlined>Confirm</b-button>
                 </div>
               </div>
             </div>
@@ -179,13 +193,10 @@ export default {
   padding-left: 0.625rem !important;
   font-size: 1.75rem;
 }
-.title .tl .td .tt {
+.title {
   margin: 0 0 0.5rem;
   font-weight: 600;
   margin-bottom: 0.625rem !important;
   margin-top: 0.625rem !important;
-}
-.title-loacation .title-duration .title-time {
-  padding-left: 0.625rem !important;
 }
 </style>
