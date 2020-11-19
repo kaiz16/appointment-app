@@ -1,19 +1,10 @@
 <template>
-  <div>
-    <navbar></navbar>
     <div id="content-view">
       <router-view/>
     </div>
-  </div>
 </template>
 <script>
-import Navbar from './components/organisms/Navbar.vue'
-// import Sidebar from './components/organisms/Sidebar.vue'
-
 export default {
-  components: {
-    'navbar': Navbar,
-  }
 }
 </script>
 <style>
