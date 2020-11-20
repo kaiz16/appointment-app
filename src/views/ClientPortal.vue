@@ -42,7 +42,7 @@
                 </div>
                 <div
                   class="column is-4"
-                  style="height: 95%; overflow-y: scroll; margin-top: .875rem !important;"
+                  style="height: 90%; overflow-y: scroll; margin-top: .875rem !important;"
                 >
                   <div class="buttons">
                     <b-button type="is-primary" outlined expanded>10:00 AM</b-button>
