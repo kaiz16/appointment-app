@@ -55,18 +55,18 @@
                 </b-field>
               </div>
               <div class="field" style="padding: 1rem !important;">
-                <b-radio
-                  v-model="radio"
+                <b-checkbox
+                  v-model="gdpr"
                   native-value="success"
                   type="is-success"
-                >I agree to receive communication. Click here to read full GDPR and Privacy Policy content.</b-radio>
+                >I agree to receive communication. Click here to read full GDPR and Privacy Policy content.</b-checkbox>
               </div>
               <div class="field" style="padding: 1rem !important;">
-                <b-radio
-                  v-model="radio"
+                <b-checkbox
+                  v-model="marketing"
                   native-value="success"
                   type="is-success"
-                >I agree to receive communication. Click here to read full Marketing Agreement.</b-radio>
+                >I agree to receive communication. Click here to read full Marketing Agreement.</b-checkbox>
               </div>
               <div class="columns" style="padding: 1rem !important; padding-left: 6rem !important;">
                 <div class="column is-1">
@@ -94,7 +94,8 @@ const thisMonth = new Date().getMonth();
 export default {
   data() {
     return {
-      radio: 'default',
+      gdpr: 'default',
+      marketing: 'default',
       date: new Date(2017, thisMonth, 1),
       events: [
         new Date(2017, thisMonth, 2),
