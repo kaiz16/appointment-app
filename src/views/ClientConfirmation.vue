@@ -94,6 +94,7 @@ const thisMonth = new Date().getMonth();
 export default {
   data() {
     return {
+      radio: 'default',
       date: new Date(2017, thisMonth, 1),
       events: [
         new Date(2017, thisMonth, 2),
