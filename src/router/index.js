@@ -1,13 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
-import Event from '../views/Event.vue';
+import Event from "../views/Event";
 import Bookings from "../views/Bookings.vue";
-import CreateEvent from "../views/CreateEvent.vue";
 import Setting from "../views/Setting.vue";
-import Login from '../views/Login.vue';
-import Register from '../views/Register.vue';
-import { guard } from '../auth' 
+import Login from "../views/Login";
+import Register from "../views/Register";
+import ClientPortal from "../views/ClientPortal";
+import ClientConfirmation from "../views/ClientConfirmation";
+import { guard } from "../auth";
 Vue.use(VueRouter);
 
 const routes = [
@@ -23,9 +24,15 @@ const routes = [
     component: Login,
   },
   {
-    path: "/login",
-    name: "Login",
+    path: "/register",
+    name: "Register",
     component: Register,
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
+    beforeEnter: guard,
   },
   {
     path: "/event/:id",
@@ -33,11 +40,6 @@ const routes = [
     component: Event,
     beforeEnter: guard,
     children: [
-      {
-        path: "dashboard",
-        name: "Dashboard",
-        component: Dashboard,
-      },
       {
         path: "bookings",
         name: "Bookings",
@@ -47,26 +49,19 @@ const routes = [
         path: "setting",
         name: "Setting",
         component: Setting,
+        props: true,
+      },
+      {
+        path: "clientPortal",
+        name: "ClientPortal",
+        component: ClientPortal,
+      },
+      {
+        path: "clientConfirmation",
+        name: "ClientConfirmation",
+        component: ClientConfirmation,
       },
     ],
-  },
-  {
-    path: "/bookings",
-    name: "Bookings",
-    component: Bookings,
-    beforeEnter: guard
-  },
-  {
-    path: "/newbooking",
-    name: "CreateEvent",
-    component: CreateEvent,
-    beforeEnter: guard
-  },
-  {
-    path: "/setting",
-    name: "Setting",
-    component: Setting,
-    beforeEnter: guard
   },
 ];
 

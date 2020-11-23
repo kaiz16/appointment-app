@@ -1,42 +1,55 @@
 <template>
-  <b-sidebar
-    position="fixed"
-    :fullheight="true"
-    :mobile="false"
-    :can-cancel="false"
-    type="is-white"
-    open
-  >
+  <b-sidebar position="fixed" :fullheight="true" :can-cancel="false" type="is-white" open>
     <b-menu>
       <b-menu-list>
         <b-menu-item
           tag="router-link"
-          :active="$route.name == 'Dashboard'"
           :to="{name: 'Dashboard'}"
-          cus
-          icon="menu"
+          icon="bookmark-multiple-outline"
           label="Dashboard"
         ></b-menu-item>
-        <b-menu-item
-          tag="router-link"
-          :active="$route.name == 'Bookings'"
-          :to="{name: 'Bookings'}"
-          cus
-          icon="bookmark-multiple-outline"
-          label="Bookings"
-        ></b-menu-item>
-        <b-menu-item 
-          tag="router-link" 
-          :to="{name: 'Setting'}"
-          :active="$route.name == 'Setting'"
-          icon="cog-outline" 
-          label="Setting"></b-menu-item>
       </b-menu-list>
+      <section class="section">
+        <b-menu-list :label="title">
+          <b-menu-item
+            tag="router-link"
+            :active="$route.name == 'Bookings'"
+            :to="{name: 'Bookings'}"
+            cus
+            icon="bookmark-multiple-outline"
+            label="Bookings"
+          ></b-menu-item>
+          <b-menu-item
+            tag="router-link"
+            :to="{name: 'Setting'}"
+            :active="$route.name == 'Setting'"
+            icon="cog-outline"
+            label="Setting"
+          ></b-menu-item>
+        </b-menu-list>
+        <b-menu-list label="Client Portal">
+          <b-menu-item
+            tag="router-link"
+            :to="{name: 'ClientPortal'}"
+            :active="$route.name == 'ClientPortal'"
+            icon="account"
+            label="Client Portal"
+          ></b-menu-item>
+          <b-menu-item
+            tag="router-link"
+            :to="{name: 'ClientConfirmation'}"
+            :active="$route.name == 'ClientConfirmation'"
+            icon="account"
+            label="Client Confirmation"
+          ></b-menu-item>
+        </b-menu-list>
+      </section>
     </b-menu>
-    
   </b-sidebar>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["title"]
+};
 </script>

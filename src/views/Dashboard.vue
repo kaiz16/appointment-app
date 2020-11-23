@@ -1,8 +1,9 @@
 <template>
-  <div class="column is-half">
-    <b-button @click="showNewEventModal">+ New</b-button>
-    <div class="columns is-centered">
-      <div class="mr-0 pt-5">
+  <div id="dashboard">
+    <navbar></navbar>
+    <div class="columns is-centered" style="padding: 20px">
+      <div class="column is-10">
+        <b-button @click="showNewEventModal">+ New</b-button>
         <div class="table">
           <b-table hoverable @click="showEvent" :data="data" :columns="columns"></b-table>
         </div>
@@ -12,11 +13,15 @@
 </template>
 
 <script>
+import Navbar from "@/components/organisms/Navbar.vue";
 import NewEventForm from "@/components/organisms/NewEventForm";
 import axios from "axios";
 import { tokenConfig } from "@/auth";
 export default {
   name: "Dashboard",
+  components: {
+    navbar: Navbar
+  },
   data() {
     return {
       data: [

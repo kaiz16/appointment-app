@@ -1,0 +1,50 @@
+Frontend
+    Register page
+        username: String
+        password: String '123456'
+        await axios(http://backendurl/auth/login)
+    Submit
+
+Database MongoDB
+    users
+        username: 'Kaiz'
+        password: 'saltedpassword'
+
+        
+Backend
+    authentication Middleman
+        verifyToken ( used in every route except authRoute )
+            1) Check whether auth-token is present in request header
+            2) If not exists stop and return
+            3) Else check whether token is verified
+            4) If it's true allow next
+            5) Else throw an error
+
+    authentication Routes
+        Login (auth/login)
+            1) Check the username
+                if (username)
+                    2) Check the password
+                        bcrypt.compare(clientPassword, saltedPassword) == false
+                            return 404 password incorrect
+
+                        else
+                            Assign JWT Token
+                            Return that token
+                else{
+                    return 404 saying user doesn't exist
+                }
+        Register (auth/register)
+            If (username || email exists) return username exists
+
+            else
+                1) const saltedPassword = bcrypt.salt(clientPassword, 10)
+                
+                2) Insert username and saltedPassword to database
+
+                3) Return 200 saying register was successfull
+
+JWT (JSON Web Token)
+        Data exchanger to backend without exposing the password
+        Like a middleman between your user and your database
+

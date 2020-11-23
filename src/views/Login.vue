@@ -73,6 +73,9 @@ export default {
                 localStorage.setItem("auth-token", data.data.token);
                 this.$router.push("/dashboard");
             }
+        },
+        takeMeToRegister(){
+            this.$router.push('/register')
         }
     }
 };
