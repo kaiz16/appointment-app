@@ -1,22 +1,41 @@
 <template>
-<section>
-    <div class="mr-0 pt-5">
+<footer>
+    <div class="container">
         <div class="columns is-centered">
-            <div class="column is-half">
-                <b-field label="Email">
-                    <b-input v-model="email" value="johnsilver" maxlength="30"></b-input>
-                </b-field>
+            <div class="column is-two-fifths">
 
-                <b-field label="Password">
-                    <b-input type="password" v-model="password" password-reveal></b-input>
-                </b-field>
-                <a @click="takeMeToRegister">Don't have an account? Register!</a>
-                <br>
-                <b-button @click="login">Submit</b-button>
+                <section>
+                    <b-field label="Username" :type="{ 'is-danger': hasError }" :message="{ 'Username is not available': hasError }" placeholder="Username">
+                        <b-input v-model="email" value="" maxlength="30"></b-input>
+                    </b-field>
+
+                    <b-field label="Password" :type="{ 'is-danger': hasError }" :message="[
+                { 'Password is too short': hasError },
+                { 'Password must have at least 8 characters': hasError }
+            ]">
+                        <b-input v-model="password" value="" type="password" maxlength="30"></b-input>
+                    </b-field>
+
+                    <div class="column is-half is-offset-one-quarter">
+                        <div class="buttons">
+                            <b-button type="is-primary" expanded v-on:click="login">Login</b-button>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <b-checkbox>Remember Me</b-checkbox>
+                    </div>
+
+                    <div class="field">
+                        <b-switch :rounded="isRounded" :outlined="isOutlined" :size="size" :type="type" :left-label='leftLabel' :passive-type='passiveType'>Auto Sign In</b-switch>
+                    </div>
+
+                    <p><a href="www.google.com">Forgot your password?</a></p>
+                </section>
             </div>
         </div>
     </div>
-</section>
+</footer>
 </template>
 
 <script>
@@ -24,6 +43,13 @@ import axios from "axios";
 export default {
     data() {
         return {
+            hasError: false,
+            size: '',
+            type: null,
+            passiveType: null,
+            isRounded: false,
+            isOutlined: false,
+            leftLabel: false,
             email: "",
             password: ""
         };
@@ -56,4 +82,9 @@ export default {
 </script>
 
 <style>
+footer {
+
+    padding: 10px;
+
+}
 </style>

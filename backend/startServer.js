@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const verifyToken = require("./routes/verifyToken");
 require("dotenv").config();
+
 function startServer() {
   // Instantiating the app
   const app = express();
@@ -9,7 +10,9 @@ function startServer() {
   // Express middleware
   app.use(cors());
   app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
+  app.use(express.urlencoded({
+    extended: false
+  }));
 
   // Import your router in here and use them in your express app.
   app.use("/api/auth", require("./routes/Auth"));
