@@ -24,34 +24,30 @@
                       ></b-button>
                     </b-tooltip>
                   </div>
-                  <h2 class="title" style="color: rgb(225, 236, 254); padding-top: 4rem;">Ballet</h2>
+                  <h2 class="title" style="color: rgb(225, 236, 254); padding-top: 4rem;">{{event.title}} by {{event.username}}</h2>
                   <p style="color: rgb(225, 236, 254); font-weight: 600;"></p>
                   <p class="title-loacation" style="color: rgb(225, 236, 254);">
                     Location:
-                    <span class="tl" style="font-weight: 600;">In-person Meeting</span>
+                    <span class="tl" style="font-weight: 600;">{{event.meetingType}} Meeting</span>
                   </p>
                   <p class="title-duration" style="color: rgb(225, 236, 254);">
                     Duration:
-                    <span class="td" style="font-weight: 600;">30 minutes</span>
+                    <span class="td" style="font-weight: 600;">{{event.duration}} Minutes</span>
                   </p>
                   <p class="title-time" style="color: rgb(225, 236, 254);">
                     When:
-                    <span class="tt" style="font-weight: 600;">11:30 AM</span> on
-                    <span class="tt" style="font-weight: 600;">Friday</span> ,
-                    <span class="tt" style="font-weight: 600;">November</span>
-                    <span class="tt" style="font-weight: 600;">20</span> ,
-                    <span class="tt" style="font-weight: 600;">2020</span>
+                    <span class="tt" style="font-weight: 600;">{{moment(`${year}-${month}-${day}T${hour}:${minutes}:00`).calendar()}}</span>
                   </p>
                 </div>
               </div>
               <div class="name" style="padding: 1rem !important;">
                 <b-field label="Full Name">
-                  <b-input value="" placeholder="Your Fullname"></b-input>
+                  <b-input v-model="name" placeholder="Your Fullname"></b-input>
                 </b-field>
               </div>
               <div class="email" style="padding: 1rem !important;">
                 <b-field label="Email" type="is-danger" message="This email is invalid">
-                  <b-input type="email" value="" placeholder="Your Emaill" maxlength="30"></b-input>
+                  <b-input v-model="email" type="email" placeholder="Your Emaill" maxlength="30"></b-input>
                 </b-field>
               </div>
               <div class="field" style="padding: 1rem !important;">
@@ -70,10 +66,10 @@
               </div>
               <div class="columns" style="padding: 1rem !important; padding-left: 6rem !important;">
                 <div class="column is-1">
-                  <b-button type="is-primary" icon-left="arrow-left-bold-outline" outlined>Back</b-button>
+                  <b-button type="is-primary" icon-left="arrow-left-bold-outline" @click="goBack" outlined>Back</b-button>
                 </div>
                 <div class="column is-5 is-offset-7" style="padding: 1rem !important;">
-                  <b-button type="is-success" icon-right="location-enter" outlined>Confirm</b-button>
+                  <b-button type="is-success" icon-right="location-enter" @click="confirm" outlined>Confirm</b-button>
                 </div>
               </div>
             </div>
@@ -90,12 +86,47 @@
 </template>
 
 <script>
-const thisMonth = new Date().getMonth();
+import moment from 'moment'
+import axios from 'axios'
 export default {
+props: ['event', 'day', 'month', 'year', 'hour', 'minutes'],
   data() {
     return {
+      name: null,
+      email: null,
       gdpr: 'default',
-      marketing: 'default',
+      marketing: 'default'
+    }
+  },
+  beforeCreate(){
+      this.moment = moment
+  },
+  methods: {
+      goBack(){
+          this.$router.push({
+              name: "ClientPortal"
+          })
+      },
+      async confirm(){
+        const { data, error } = await axios({
+            url: "bookings/create",
+            data: {
+                eventId: this.$route.params.id,
+                name: this.name,
+                email: this.email,
+                day: this.day,
+                month: this.month,
+                year: this.year,
+                hour: this.hour,
+                minutes: this.minutes
+            },
+            method: "POST"
+        });
+        if (error) {
+            this.$buefy.toast.open("Error");
+        } else {
+            console.log(data);
+        }
     }
   }
 };

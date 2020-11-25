@@ -1,8 +1,10 @@
 <template>
   <div v-if="data">
-    <sidebar :title="data.event.title"></sidebar>
+    <sidebar :title="data.event.title" v-if="$route.name !== 'ClientPortal' && $route.name !== 'ClientConfirmation'"></sidebar>
     <div id="event-view">
-      <router-view v-bind="{event: data.event}"/>
+      <keep-alive>
+        <router-view v-bind="{event: data.event}"/>
+      </keep-alive>
     </div>
   </div>
 </template>
@@ -20,7 +22,7 @@ export default {
     }
   },
   async mounted(){
-    if (this.$route.name != 'Bookings'){
+    if (this.$route.name == 'Event'){
       this.$router.push({
           name: 'Bookings'
       })
