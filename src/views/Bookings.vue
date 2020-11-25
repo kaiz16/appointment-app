@@ -5,7 +5,7 @@
       <div class="columns is-centered" style="padding: 20px">
         <div class="column is-11">
           <div class="table">
-            <b-table hoverable @click="showPortal" :data="bookings" :columns="columns"></b-table>
+            <b-table hoverable @click="showPortal" :data="data" :columns="columns"></b-table>
           </div>
           <!-- <b-table
             :data="isEmpty ? [] : data"
@@ -66,9 +66,7 @@ export default {
   },
   data() {
     return {
-      bookings: [
-        { name: "Test", day: 30, month: "November", year: 2020 }
-        ],
+      data: [{ name: "Test", day: 30, month: "November", year: 2020 }],
       columns: [
         {
           field: "name",
@@ -113,7 +111,7 @@ export default {
   },
   async mounted() {
     const { data, error } = await axios({
-      url: "bookings/" + this.event._id,
+      url: "bookings/:eventId" + this.event._id,
       headers: tokenConfig()
     });
     if (error) {
@@ -130,7 +128,6 @@ export default {
       }
     });
   }
-
 };
 </script>
 
