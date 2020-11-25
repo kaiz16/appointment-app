@@ -2,11 +2,11 @@
   <section>
     <div id="bookings">
       <navbar></navbar>
-      <div class="columns is-centered" style="padding: 20px">
+      <div class="columns is-centered" style="padding: 20px">     
         <div class="column is-11">
           <div class="table">
             <b-table hoverable @click="showPortal" :data="data" :columns="columns"></b-table>
-          </div>
+          </div>        
           <!-- <b-table
             :data="isEmpty ? [] : data"
             :bordered="isBordered"

@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="column is-half is-offset-one-quarter">
-                        <b-button v-on:click="submit">Submit</b-button>
+                        <b-button type="is-primary" v-on:click="submit" expanded >Submit</b-button>
                     </div>
 
                 </div>
