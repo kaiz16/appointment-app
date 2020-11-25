@@ -5,7 +5,7 @@
         <b-button
           type="is-primary"
           @click="logout"
-          style="margin-right: 10px; margin-bottom: 10px;"
+          style="margin-right: 20px; margin-bottom: 10px; margin-top: 10px;"
           icon-left="logout"
         >Logout</b-button>
       </b-navbar-item>

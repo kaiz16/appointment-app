@@ -5,7 +5,7 @@
       <div class="columns is-centered" style="padding: 20px">
         <div class="column is-11">
           <div class="table">
-            <b-table :data="bookings" :columns="columns"></b-table>
+            <b-table hoverable @click="showPortal" :data="bookings" :columns="columns"></b-table>
           </div>
           <!-- <b-table
             :data="isEmpty ? [] : data"
@@ -66,7 +66,9 @@ export default {
   },
   data() {
     return {
-      bookings: [],
+      bookings: [
+        { name: "Test", day: 30, month: "November", year: 2020 }
+        ],
       columns: [
         {
           field: "name",
@@ -119,7 +121,16 @@ export default {
     } else {
       this.bookings = data;
     }
+  },
+  showPortal(event) {
+    this.$router.push({
+      name: "ClientPortal",
+      param: {
+        id: event._id
+      }
+    });
   }
+
 };
 </script>
 
