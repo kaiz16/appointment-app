@@ -5,7 +5,7 @@
       <div class="columns is-centered" style="padding: 20px">
         <div class="column is-11">
           <div class="table">
-            <b-table hoverable @click="showPortal" :data="bookings" :columns="columns"></b-table>
+            <b-table hoverable @click="showPortal" :data="data" :columns="columns"></b-table>
           </div>
           <!-- <b-table
             :data="isEmpty ? [] : data"
@@ -66,9 +66,7 @@ export default {
   },
   data() {
     return {
-      bookings: [
-        { name: "Test", day: 30, month: "November", year: 2020 }
-        ],
+      data: [{ name: "Test", day: 30, month: "November", year: 2020 }],
       columns: [
         {
           field: "name",
@@ -76,18 +74,15 @@ export default {
         },
         {
           field: "day",
-          label: "Day",
-          numeric: true
+          label: "Day"
         },
         {
           field: "month",
-          label: "Month",
-          numeric: true
+          label: "Month"
         },
         {
           field: "year",
-          label: "Year",
-          numeric: true
+          label: "Year"
         }
       ]
     };
@@ -113,24 +108,26 @@ export default {
   },
   async mounted() {
     const { data, error } = await axios({
-      url: "bookings/" + this.event._id,
+      url: "bookings/",
+      method: "GET",
       headers: tokenConfig()
     });
     if (error) {
       this.$buefy.toast.open("Error");
     } else {
-      this.bookings = data;
+      this.data = data;
     }
   },
-  showPortal(event) {
-    this.$router.push({
-      name: "ClientPortal",
-      param: {
-        id: event._id
-      }
-    });
+  methods: {
+    showPortal(event) {
+      this.$router.push({
+        name: "ClientPortal",
+        param: {
+          id: event._id
+        }
+      });
+    }
   }
-
 };
 </script>
 

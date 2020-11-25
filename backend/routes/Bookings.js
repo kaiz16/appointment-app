@@ -1,11 +1,13 @@
 const router = require('express').Router()
 const Schema = require('../Models')
-const { getAvailableTimes } = require('./eventHelpers')
+const {
+    getAvailableTimes
+} = require('./eventHelpers')
 // Getting the bookings by the event id
-router.get('/:eventId', (req, res) => {
+router.get('/', (req, res) => {
     console.log(req.body)
     Schema.bookings.find({
-        eventId: req.params.eventId
+        username: req.user.username
     }).then(bookings => res.json(bookings))
 })
 
@@ -19,20 +21,20 @@ router.post('/create', async (req, res) => {
         let minutes = req.body.minutes
 
         // conversions
-        
-        if (hour < 10){
+
+        if (hour < 10) {
             hour = `0${req.body.hour}`
         }
 
-        if (minutes < 10){
+        if (minutes < 10) {
             minutes = `0${req.body.minutes}`
         }
 
         const preferredTime = `${hour}${minutes}`
-        if (!availableTimes.includes(preferredTime)){
+        if (!availableTimes.includes(preferredTime)) {
             throw "Not available"
         }
-        
+
         const newBooking = new Schema.bookings({
             eventId: req.body.eventId,
             name: req.body.name,
@@ -46,7 +48,7 @@ router.post('/create', async (req, res) => {
         })
 
         newBooking.save().then(booking => res.json(booking))
-        .catch(err => res.status(400).json(err))
+            .catch(err => res.status(400).json(err))
 
     } catch (error) {
         return res.status(400).json(error)
@@ -54,4 +56,3 @@ router.post('/create', async (req, res) => {
 })
 
 module.exports = router
-
