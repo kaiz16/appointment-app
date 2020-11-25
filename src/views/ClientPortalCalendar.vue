@@ -1,5 +1,5 @@
 <template>
-  <section class="vbox">
+  <section class="vbox" v-if="event">
     <div class="columns is-centered">
       <div class="column is-half">
         <div id class="client-appointments">
@@ -10,29 +10,15 @@
                 style="padding: 1rem; color: rgb(225, 236, 254); background-image: linear-gradient(242deg, rgb(63, 81, 181) 0%, rgb(156, 39, 176) 100%);"
               >
                 <div style="position: relative;">
-                  <div
-                    style="color: rgb(225, 236, 254); position: absolute; height: 55px; top: 25px; right: 15px;"
-                  >
-                    <b-tooltip v-model: username>
-                      <b-button
-                        rounded
-                        size="is-medium"
-                        type="is-primary"
-                        style="border-radius: 100%;"
-                        icon-left="account"
-                        outlined
-                      ></b-button>
-                    </b-tooltip>
-                  </div>
-                  <h2 class="title" style="color: rgb(225, 236, 254); padding-top: 4rem;">Ballet</h2>
+                  <h2 class="title" style="color: rgb(225, 236, 254); padding-top: 4rem;">{{event.title}} by {{event.username}}</h2>
                   <p style="color: rgb(225, 236, 254); font-weight: 600;"></p>
                   <p class="title-loacation" style="color: rgb(225, 236, 254);">
                     Location:
-                    <span class="tl" style="font-weight: 600;">In-person Meeting</span>
+                    <span class="tl" style="font-weight: 600;">{{event.meetingType}} Meeting</span>
                   </p>
                   <p class="title-duration" style="color: rgb(225, 236, 254);">
                     Duration:
-                    <span class="td" style="font-weight: 600;">30 minutes</span>
+                    <span class="td" style="font-weight: 600;">{{event.duration}} minutes</span>
                   </p>
                 </div>
               </div>
@@ -45,20 +31,14 @@
                   style="height: 90%; overflow-y: scroll; margin-top: .875rem !important;"
                 >
                   <div class="buttons">
-                    <b-button type="is-primary" outlined expanded>10:00 AM</b-button>
-                    <b-button type="is-primary" outlined expanded>10:30 AM</b-button>
-                    <b-button type="is-primary" outlined expanded>11:00 AM</b-button>
-                    <b-button type="is-primary" outlined expanded>11:30 AM</b-button>
-                    <b-button type="is-primary" outlined expanded>12:00 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>12:30 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>01:00 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>01:30 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>02:00 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>02:30 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>03:00 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>03:30 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>04:00 PM</b-button>
-                    <b-button type="is-primary" outlined expanded>04:30 PM</b-button>
+                    <b-button type="is-primary" 
+                        @click="confirmApplication(time)"
+                        expanded 
+                        outlined 
+                        v-for="time in availableTimes" :key="time">
+                        {{moment(time, "HH:mm").format('hh:mm A')}}
+                    </b-button>
+                    <p class="title is-5 has-text-centered" v-if="availableTimes.length == 0">Not available</p>
                   </div>
                 </div>
               </div>
@@ -76,58 +56,55 @@
 </template>
 
 <script>
+import moment from 'moment'
 import axios from "axios";
 const thisMonth = new Date().getMonth();
+const thisYear = new Date().getFullYear();
+const thisDay = new Date().getDate()
 export default {
   data() {
     return {
-      date: new Date(2017, thisMonth, 1),
-      events: [
-        new Date(2017, thisMonth, 2),
-        new Date(2017, thisMonth, 6),
-        {
-          date: new Date(2017, thisMonth, 6),
-          type: "is-info"
-        },
-        {
-          date: new Date(2017, thisMonth, 8),
-          type: "is-danger"
-        },
-        {
-          date: new Date(2017, thisMonth, 10),
-          type: "is-success"
-        },
-        {
-          date: new Date(2017, thisMonth, 10),
-          type: "is-link"
-        },
-        new Date(2017, thisMonth, 12),
-        {
-          date: new Date(2017, thisMonth, 12),
-          type: "is-warning"
-        },
-        {
-          date: new Date(2017, thisMonth, 16),
-          type: "is-danger"
-        },
-        new Date(2017, thisMonth, 20),
-        {
-          date: new Date(2017, thisMonth, 29),
-          type: "is-success"
-        },
-        {
-          date: new Date(2017, thisMonth, 29),
-          type: "is-warning"
-        },
-        {
-          date: new Date(2017, thisMonth, 29),
-          type: "is-info"
-        }
-      ]
+      event: null,
+      availableTimes: null,
+      date: null,
+      events: []
     };
   },
-
+  watch: {
+      date: async function(date){
+          const { data } = await axios({
+              url: "events/" + this.$route.params.id,
+              params: {
+                  day: date.getDate(),
+                  month: date.getMonth() + 1,
+                  year: date.getFullYear()
+              }
+          })
+        this.event = data.event
+        this.availableTimes = data.availableTimes
+      }
+  },
+  beforeCreate(){
+      this.moment = moment
+  },
+  mounted(){
+      this.date = new Date(thisYear, thisMonth, thisDay)
+  },
   methods: {
+    confirmApplication(time){
+        const params = {
+                event: this.event,
+                day: this.date.getDate(),
+                month: this.date.getMonth() + 1,
+                year: this.date.getFullYear(),
+                hour: moment(time, "HHmm").get('hour'),
+                minutes: moment(time, "HHmm").get('minutes')
+        }
+        this.$router.push({
+            name: 'ClientConfirmation',
+            params,
+        })
+    },
     async findUsername() {
       const { username, error } = await axios({
         url: "events/username/:id",

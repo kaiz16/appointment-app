@@ -17,8 +17,8 @@ function startServer() {
   // Import your router in here and use them in your express app.
   app.use("/api/auth", require("./routes/Auth"));
   app.use("/api/users", verifyToken, require("./routes/Users"));
-  app.use("/api/bookings", verifyToken, require("./routes/Bookings"));
-  app.use("/api/events", verifyToken, require("./routes/Events"));
+  app.use("/api/bookings", require("./routes/Bookings"));
+  app.use("/api/events", require("./routes/Events"));
 
   const port = process.env.PORT || 5000;
   // If the port.env exist will use that else use 5000

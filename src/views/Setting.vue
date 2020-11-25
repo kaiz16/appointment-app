@@ -12,7 +12,9 @@
 
           <div class="column is-three-quarters">
             <b-field label="Your Appointment Form URL" type="is-dark">
-              <b-input v-model="clonedEvent._id" placeholder="Change Your Custom URL"></b-input>
+              <a :href="'http://localhost:8080/event/' + clonedEvent._id" target="_blank">
+                {{'http://localhost:8080/event/' + clonedEvent._id}}
+              </a>
             </b-field>
           </div>
 

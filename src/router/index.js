@@ -6,8 +6,8 @@ import Bookings from "../views/Bookings.vue";
 import Setting from "../views/Setting.vue";
 import Login from "../views/Login";
 import Register from "../views/Register";
-import ClientPortal from "../views/ClientPortal";
-import ClientConfirmation from "../views/ClientConfirmation";
+import ClientPortalCalendar from "../views/ClientPortalCalendar";
+import ClientPortalConfirmation from "../views/ClientPortalConfirmation";
 import { guard } from "../auth";
 Vue.use(VueRouter);
 
@@ -38,28 +38,30 @@ const routes = [
     path: "/event/:id",
     name: "Event",
     component: Event,
-    beforeEnter: guard,
     children: [
+      {
+        path: '',
+        name: 'ClientPortal',
+        component: ClientPortalCalendar
+      },
+      {
+        path: 'confirm',
+        name: 'ClientConfirmation',
+        component: ClientPortalConfirmation,
+        props: true,
+      },
       {
         path: "bookings",
         name: "Bookings",
         component: Bookings,
+        beforeEnter: guard,
       },
       {
         path: "setting",
         name: "Setting",
         component: Setting,
+        beforeEnter: guard,
         props: true,
-      },
-      {
-        path: "clientPortal",
-        name: "ClientPortal",
-        component: ClientPortal,
-      },
-      {
-        path: "clientConfirmation",
-        name: "ClientConfirmation",
-        component: ClientConfirmation,
       },
     ],
   },

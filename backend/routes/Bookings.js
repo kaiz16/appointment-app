@@ -3,11 +3,11 @@ const Schema = require('../Models')
 const {
     getAvailableTimes
 } = require('./eventHelpers')
+const verifyToken = require('./verifyToken')
 // Getting the bookings by the event id
-router.get('/:id', (req, res) => {
-    console.log(req.body)
-    Schema.bookings.findOne({
-        _id: req.params.id
+router.get('/', verifyToken, (req, res) => {
+    Schema.bookings.find({
+        username: req.user.username
     }).then(bookings => res.json(bookings))
 })
 

@@ -5,7 +5,7 @@
         <b-menu-item
           tag="router-link"
           :to="{name: 'Dashboard'}"
-          icon="bookmark-multiple-outline"
+          icon="menu"
           label="Dashboard"
         ></b-menu-item>
       </b-menu-list>
@@ -25,22 +25,6 @@
             :active="$route.name == 'Setting'"
             icon="cog-outline"
             label="Setting"
-          ></b-menu-item>
-        </b-menu-list>
-        <b-menu-list label="Client Portal">
-          <b-menu-item
-            tag="router-link"
-            :to="{name: 'ClientPortal'}"
-            :active="$route.name == 'ClientPortal'"
-            icon="account"
-            label="Client Portal"
-          ></b-menu-item>
-          <b-menu-item
-            tag="router-link"
-            :to="{name: 'ClientConfirmation'}"
-            :active="$route.name == 'ClientConfirmation'"
-            icon="account"
-            label="Client Confirmation"
           ></b-menu-item>
         </b-menu-list>
       </section>
