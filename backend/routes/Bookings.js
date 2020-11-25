@@ -6,7 +6,7 @@ const {
 // Getting the bookings by the event id
 router.get('/:id', (req, res) => {
     console.log(req.body)
-    Schema.bookings.find({
+    Schema.bookings.findOne({
         _id: req.params.id
     }).then(bookings => res.json(bookings))
 })
