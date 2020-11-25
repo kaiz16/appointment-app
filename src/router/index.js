@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
