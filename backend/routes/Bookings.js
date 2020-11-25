@@ -4,10 +4,10 @@ const {
     getAvailableTimes
 } = require('./eventHelpers')
 // Getting the bookings by the event id
-router.get('/:id', (req, res) => {
+router.get('/', (req, res) => {
     console.log(req.body)
-    Schema.bookings.findOne({
-        _id: req.params.id
+    Schema.bookings.find({
+        username: req.user.username
     }).then(bookings => res.json(bookings))
 })
 

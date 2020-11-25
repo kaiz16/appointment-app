@@ -74,18 +74,15 @@ export default {
         },
         {
           field: "day",
-          label: "Day",
-          numeric: true
+          label: "Day"
         },
         {
           field: "month",
-          label: "Month",
-          numeric: true
+          label: "Month"
         },
         {
           field: "year",
-          label: "Year",
-          numeric: true
+          label: "Year"
         }
       ]
     };
@@ -111,22 +108,25 @@ export default {
   },
   async mounted() {
     const { data, error } = await axios({
-      url: "bookings/" + this.event._id,
+      url: "bookings/",
+      method: "GET",
       headers: tokenConfig()
     });
     if (error) {
       this.$buefy.toast.open("Error");
     } else {
-      this.bookings = data;
+      this.data = data;
     }
   },
-  showPortal(event) {
-    this.$router.push({
-      name: "ClientPortal",
-      param: {
-        id: event._id
-      }
-    });
+  methods: {
+    showPortal(event) {
+      this.$router.push({
+        name: "ClientPortal",
+        param: {
+          id: event._id
+        }
+      });
+    }
   }
 };
 </script>

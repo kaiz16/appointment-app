@@ -13,7 +13,7 @@
                   <div
                     style="color: rgb(225, 236, 254); position: absolute; height: 55px; top: 25px; right: 15px;"
                   >
-                    <b-tooltip v-model: username>
+                    <b-tooltip v-model="data">
                       <b-button
                         rounded
                         size="is-medium"
@@ -81,6 +81,7 @@ const thisMonth = new Date().getMonth();
 export default {
   data() {
     return {
+      data: "",
       date: new Date(2017, thisMonth, 1),
       events: [
         new Date(2017, thisMonth, 2),
@@ -126,21 +127,17 @@ export default {
       ]
     };
   },
-
   methods: {
     async findUsername() {
-      const { username, error } = await axios({
-        url: "events/username/:id",
-        params: {
-          _id: this.$route.params.id
-        },
+      const { data, error } = await axios({
+        url: "events/username/" + this.$route.params.id,
         method: "GET"
       });
       if (error) {
         this.$buefy.toast.open("Error");
       } else {
-        print(this.username);
-        return (this.username.username.data = username);
+        print(this.data.username);
+        return (this.data.username = data);
       }
     }
   }
