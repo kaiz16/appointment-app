@@ -111,7 +111,7 @@ export default {
   },
   async mounted() {
     const { data, error } = await axios({
-      url: "bookings/:eventId" + this.event._id,
+      url: "bookings/" + this.event._id,
       headers: tokenConfig()
     });
     if (error) {
