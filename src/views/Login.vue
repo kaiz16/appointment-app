@@ -24,6 +24,7 @@
 
                     <div class="field">
                         <b-checkbox>Remember Me</b-checkbox>
+                        
                     </div>
 
                     <div class="field">
@@ -31,6 +32,7 @@
                     </div>
 
                     <p><a href="www.google.com">Forgot your password?</a></p>
+                     <a @click="takeMeToRegister">Have you Sign Up?</a>
                 </section>
             </div>
         </div>
