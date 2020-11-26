@@ -66,7 +66,7 @@ export default {
   },
   data() {
     return {
-      data: [{ name: "Test", day: 30, month: "November", year: 2020 }],
+      data: [],
       columns: [
         {
           field: "name",
