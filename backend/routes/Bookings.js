@@ -5,9 +5,9 @@ const {
 } = require('./eventHelpers')
 const verifyToken = require('./verifyToken')
 // Getting the bookings by the event id
-router.get('/', verifyToken, (req, res) => {
+router.get('/:id', verifyToken, (req, res) => {
     Schema.bookings.find({
-        username: req.user.username
+        eventId: req.params.id
     }).then(bookings => res.json(bookings))
 })
 

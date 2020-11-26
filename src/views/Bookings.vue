@@ -2,11 +2,11 @@
   <section>
     <div id="bookings">
       <navbar></navbar>
-      <div class="columns is-centered" style="padding: 20px">     
+      <div class="columns is-centered" style="padding: 20px">
         <div class="column is-11">
           <div class="table">
             <b-table hoverable @click="showPortal" :data="data" :columns="columns"></b-table>
-          </div>        
+          </div>
           <!-- <b-table
             :data="isEmpty ? [] : data"
             :bordered="isBordered"
@@ -108,7 +108,7 @@ export default {
   },
   async mounted() {
     const { data, error } = await axios({
-      url: "bookings/",
+      url: "bookings/" + this.$route.params.id,
       method: "GET",
       headers: tokenConfig()
     });

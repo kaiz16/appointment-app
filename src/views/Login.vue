@@ -1,19 +1,16 @@
 <template>
 <footer>
-    <div class="container">
+    <div id="login" class="container">
         <div class="columns is-centered">
             <div class="column is-two-fifths">
 
                 <section>
-                    <b-field label="Username" :type="{ 'is-danger': hasError }" :message="{ 'Username is not available': hasError }" placeholder="Username">
-                        <b-input v-model="email" value="" maxlength="30"></b-input>
+                    <b-field label="Email">
+                        <b-input required v-model="email" value="" maxlength="30" ></b-input>
                     </b-field>
 
-                    <b-field label="Password" :type="{ 'is-danger': hasError }" :message="[
-                { 'Password is too short': hasError },
-                { 'Password must have at least 8 characters': hasError }
-            ]">
-                        <b-input v-model="password" value="" type="password" maxlength="30"></b-input>
+                    <b-field label="Password" >
+                        <b-input required v-model="password" value="" type="password" maxlength="30" ></b-input>
                     </b-field>
 
                     <div class="column is-half is-offset-one-quarter">
@@ -43,6 +40,7 @@
 <script>
 import axios from "axios";
 export default {
+    name: "Login",
     data() {
         return {
             hasError: false,
@@ -57,14 +55,26 @@ export default {
         };
     },
     methods: {
+        
         async login() {
-            const {
+        if (this.email == null || this.email == "") {
+        this.$buefy.toast.open({
+          message: "<b>Your Email Can't Be Empty</b>",
+          type: "is-danger"
+        });
+      } else if (this.password == null || this.password == "") {
+        this.$buefy.toast.open({
+          message: "<b>Your Password Can't Be Empty</b>",
+          type: "is-danger"
+        });
+      } else{
+             const {
                 data,
                 error
             } = await axios({
                 url: "auth/login",
                 data: {
-                    email: this.email,
+                    email: this.email.toLowerCase(),
                     password: this.password
                 },
                 method: "POST"
@@ -74,7 +84,7 @@ export default {
             } else {
                 localStorage.setItem("auth-token", data.data.token);
                 this.$router.push("/dashboard");
-            }
+            }}
         },
         takeMeToRegister(){
             this.$router.push('/register')

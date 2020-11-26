@@ -8,15 +8,25 @@ import Login from "../views/Login";
 import Register from "../views/Register";
 import ClientPortalCalendar from "../views/ClientPortalCalendar";
 import ClientPortalConfirmation from "../views/ClientPortalConfirmation";
-import { guard } from "../auth";
+import {
+  guard
+} from "../auth";
+
 Vue.use(VueRouter);
 
-const routes = [
-  {
+
+
+const routes = [{
     path: "*",
     redirect: {
       name: "Dashboard",
     },
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
+    beforeEnter: guard,
   },
   {
     path: "/login",
@@ -29,17 +39,10 @@ const routes = [
     component: Register,
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard,
-    beforeEnter: guard,
-  },
-  {
     path: "/event/:id",
     name: "Event",
     component: Event,
-    children: [
-      {
+    children: [{
         path: '',
         name: 'ClientPortal',
         component: ClientPortalCalendar
