@@ -1,5 +1,5 @@
 <template>
-  <section class="vbox" id="app">
+  <section class="vbox">
     <div class="columns is-centered">
       <div class="column is-half" style="width: 660px;">
         <div id class="client-appointments">
@@ -118,7 +118,6 @@ import moment from "moment";
 import axios from "axios";
 export default {
   props: ["event", "day", "month", "year", "hour", "minutes"],
-  el: "#app",
   data() {
     return {
       moment: moment,
@@ -168,8 +167,9 @@ export default {
           url: "bookings/create",
           data: {
             eventId: this.$route.params.id,
+            username: this.username,
             name: this.name,
-            email: this.email.toLowerCase,
+            email: this.email.toLowerCase(),
             day: this.day,
             month: this.month,
             year: this.year,

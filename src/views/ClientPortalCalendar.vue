@@ -10,6 +10,20 @@
                 style="padding: 1rem; color: rgb(225, 236, 254); background-image: linear-gradient(242deg, rgb(63, 81, 181) 0%, rgb(156, 39, 176) 100%);"
               >
                 <div style="position: relative;">
+                  <div
+                    style="color: rgb(225, 236, 254); position: absolute; height: 55px; top: 25px; right: 15px;"
+                  >
+                    <b-tooltip :label="event.username">
+                      <b-button
+                        rounded
+                        size="is-medium"
+                        type="is-primary"
+                        style="border-radius: 100%;"
+                        icon-left="account"
+                        outlined
+                      ></b-button>
+                    </b-tooltip>
+                  </div>
                   <h2
                     class="title"
                     style="color: rgb(225, 236, 254); padding-top: 4rem;"
@@ -48,7 +62,7 @@
                     <p
                       class="title is-5 has-text-centered"
                       v-if="availableTimes.length == 0"
-                    >Not available</p>
+                    >No Available Slots Try Another Day</p>
                   </div>
                 </div>
               </div>
