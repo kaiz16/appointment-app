@@ -129,21 +129,6 @@ export default {
         name: "ClientConfirmation",
         params
       });
-    },
-    async findUsername() {
-      const { username, error } = await axios({
-        url: "events/username/:id",
-        params: {
-          _id: this.$route.params.id
-        },
-        method: "GET"
-      });
-      if (error) {
-        this.$buefy.toast.open("Error");
-      } else {
-        print(this.username);
-        return (this.username.username.data = username);
-      }
     }
   }
 };

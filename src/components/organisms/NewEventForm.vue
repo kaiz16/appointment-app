@@ -24,8 +24,7 @@ export default {
       if (this.title == "" || this.title == null) {
         this.$buefy.toast.open({
           message: "<b>Title Can't Be Empty</b>",
-          type: "is-danger",
-          position: "is-bottom"
+          type: "is-danger"
         });
       } else {
         this.$emit("close", this.title);

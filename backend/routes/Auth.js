@@ -6,14 +6,20 @@ const verifyToken = require("./verifyToken");
 
 // login route
 router.post("/login", async (req, res) => {
-  const user = await Schema.users.findOne({ email: req.body.email });
+  const user = await Schema.users.findOne({
+    email: req.body.email
+  });
   // throw error when email is wrong
-  if (!user) return res.status(400).json({ error: "Email is wrong" });
+  if (!user) return res.status(400).json({
+    error: "Email is wrong"
+  });
   // check for password correctness
   const validPassword = await bcrypt.compare(req.body.password, user.password);
 
   if (!validPassword)
-    return res.status(400).json({ error: "Password is wrong" });
+    return res.status(400).json({
+      error: "Password is wrong"
+    });
 
   // create token
   const token = jwt.sign(
@@ -34,16 +40,34 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/verifyToken", async (req, res) => {
-  verifyToken(req, res, function() {
-    res.status(200).json({ error: null, data: { token: true } });
+  verifyToken(req, res, function () {
+    res.status(200).json({
+      error: null,
+      data: {
+        token: true
+      }
+    });
   });
 });
 
 router.post("/register", async (req, res) => {
-  const isEmailExist = await Schema.users.findOne({ email: req.body.email });
+  const isUsernameExist = await Schema.users.findOne({
+    username: req.body.username
+  });
+
+  if (isUsernameExist)
+    return res.status(400).json({
+      error: "Username already exists"
+    });
+
+  const isEmailExist = await Schema.users.findOne({
+    email: req.body.email
+  });
 
   if (isEmailExist)
-    return res.status(400).json({ error: "Email already exists" });
+    return res.status(400).json({
+      error: "Email already exists"
+    });
 
   // hash the password
   const salt = await bcrypt.genSalt(10);
@@ -57,9 +81,14 @@ router.post("/register", async (req, res) => {
 
   try {
     const savedUser = await user.save();
-    res.json({ error: null, data: savedUser });
+    res.json({
+      error: null,
+      data: savedUser
+    });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({
+      error
+    });
   }
 });
 
