@@ -246,9 +246,7 @@ export default {
   margin-bottom: 0.625rem !important;
   margin-top: 0.625rem !important;
 }
-#event-view {
-  margin: 0;
-}
+
 .footer {
   width: 660px;
 }
