@@ -1,5 +1,5 @@
 <template>
-  <section class="vbox">
+  <section class="vbox" id="app">
     <div class="columns is-centered">
       <div class="column is-half" style="width: 660px;">
         <div id class="client-appointments">
@@ -13,7 +13,7 @@
                   <div
                     style="color: rgb(225, 236, 254); position: absolute; height: 55px; top: 25px; right: 15px;"
                   >
-                    <b-tooltip label="Carmen Choo">
+                    <b-tooltip :label="event.username">
                       <b-button
                         rounded
                         size="is-medium"
@@ -51,17 +51,20 @@
               </div>
               <div class="name" style="padding: 1rem !important;">
                 <b-field label="Full Name">
-                  <b-input v-model="name" placeholder="Your Fullname"></b-input>
+                  <b-input v-model="name" placeholder="Your Fullname" required></b-input>
                 </b-field>
               </div>
-              <div class="email" style="padding: 1rem !important;">
+              <div :class="['input-group',isEmailValid()]" style="padding: 1rem !important;">
+                <span class="input-group-addon" id="basic-addon1">
+                  <span class="fa fa-envelope"></span>
+                </span>
                 <b-field label="Email">
                   <b-input
+                    class="form-control"
                     v-model="email"
-                    type="text"
+                    type="email"
                     required
                     placeholder="Your Emaill"
-                    @pattern="isEmailValid"
                   ></b-input>
                 </b-field>
               </div>
@@ -121,7 +124,6 @@ export default {
       moment: moment,
       name: "",
       email: "",
-      reg: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
       gdpr: "default",
       marketing: "default"
     };
@@ -143,9 +145,12 @@ export default {
         : "has-error";
     },
     async confirm() {
-      if (this.email == null || this.email == "") {
-        this.$buefy.toast.open("Please Enter Email");
-      } else if (!this.reg.test(this.email)) {
+      // eslint-disable-next-line no-useless-escape
+      const reg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if ((this.email, this.name == null || this.email, this.name == "")) {
+        this.$buefy.toast.open("Your Email & Name Can't Be Empty");
+      } else if (!reg.test(this.email)) {
         this.$buefy.toast.open("Please Enter Correct Email");
       } else {
         const { data, error } = await axios({
@@ -153,7 +158,7 @@ export default {
           data: {
             eventId: this.$route.params.id,
             name: this.name,
-            email: this.email,
+            email: this.email.toLowerCase,
             day: this.day,
             month: this.month,
             year: this.year,
