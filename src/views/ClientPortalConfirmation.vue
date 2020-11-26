@@ -148,10 +148,21 @@ export default {
       // eslint-disable-next-line no-useless-escape
       const reg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      if ((this.email, this.name == null || this.email, this.name == "")) {
-        this.$buefy.toast.open("Your Email & Name Can't Be Empty");
+      if (this.name == null || this.name == "") {
+        this.$buefy.toast.open({
+          message: "<b>Your Name Can't Be Empty</b>",
+          type: "is-danger"
+        });
+      } else if (this.email == null || this.email == "") {
+        this.$buefy.toast.open({
+          message: "<b>Your Email Can't Be Empty</b>",
+          type: "is-danger"
+        });
       } else if (!reg.test(this.email)) {
-        this.$buefy.toast.open("Please Enter Correct Email");
+        this.$buefy.toast.open({
+          message: "<b>Please Enter Correct Email</b>",
+          type: "is-danger"
+        });
       } else {
         const { data, error } = await axios({
           url: "bookings/create",
