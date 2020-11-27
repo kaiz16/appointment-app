@@ -10,6 +10,11 @@ const getAvailableTimes = (event, day, month, year) => {
     return availableTimes
   }
 
+  const date = new Date()
+  if (day < date.getDate()) {
+    return availableTimes
+  }
+
   const weekDay = moment(`${year}-${month}-${day}`).format('dddd')
 
   const startTime = moment(event.schedules[weekDay].startTime, "HH:mm")
