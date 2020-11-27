@@ -1,12 +1,18 @@
 <template>
-  <section class="section">
+  <section id="app" class="section">
     <div id="setting">
       <navbar></navbar>
       <div class="meta-section">
         <div class="columns is-multiline">
           <div class="column is-three-quarters">
-            <b-field label="Class Name" type="is-dark">
-              <b-input v-model="clonedEvent.title" placeholder="Type Class Name"></b-input>
+            <b-field label="Class Name">
+              <b-input
+                required
+                aria-required="true"
+                v-model="clonedEvent.title"
+                placeholder="Type Class Name"
+                type="is-danger"
+              ></b-input>
             </b-field>
           </div>
 
@@ -101,6 +107,7 @@ import Navbar from "@/components/organisms/Navbar.vue";
 import axios from "axios";
 import { tokenConfig } from "@/auth";
 export default {
+  el: "#app",
   props: {
     event: {
       type: Object,
@@ -165,6 +172,14 @@ export default {
 
   methods: {
     async saveChanges() {
+      // if (day.enabled == false) {
+      //   this.$buefy.toast.open({
+      //     message: "<b>Please Tick At Least 1 Checkbox</b>",
+      //     type: "is-danger",
+      //     queue: true
+      //   });
+      //   location.reload();
+      // } else {
       this.currentSchedules.forEach(d => {
         let sH;
         let sM;
@@ -205,7 +220,9 @@ export default {
         this.$buefy.toast.open("Error");
       } else {
         console.log(data);
+        location.reload();
       }
+      // }
     }
   }
 };

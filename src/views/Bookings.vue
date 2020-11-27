@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section id="app">
     <div id="bookings">
       <navbar></navbar>
       <div class="columns is-centered" style="padding: 20px">
@@ -56,6 +56,7 @@ import Navbar from "@/components/organisms/Navbar.vue";
 import axios from "axios";
 import { tokenConfig } from "@/auth";
 export default {
+  el:"#app",
   props: {
     event: {
       type: Object
