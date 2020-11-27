@@ -5,7 +5,7 @@
             <div class="column is-two-fifths">
 
                 <section>
-                    <b-field label="Username" :type="{ 'is-danger': hasError }" :message="{ 'Username is not available': hasError }" placeholder="Username">
+                    <b-field label="Email" :type="{ 'is-danger': hasError }" :message="{ 'Email is not available': hasError }" placeholder="Email">
                         <b-input v-model="email" value="" maxlength="30"></b-input>
                     </b-field>
 
