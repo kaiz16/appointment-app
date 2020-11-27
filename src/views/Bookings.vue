@@ -1,13 +1,56 @@
 <template>
+    <section>
+        <b-field grouped group-multiline>
+            <button class="button field is-danger" @click="checkedRows = []"
+                :disabled="!checkedRows.length">
+                <b-icon icon="close"></b-icon>
+                <span>Delete</span>
+            </button>
+            <!--<b-select v-model="checkboxPosition">
+                <option value="left">Checkbox at left</option>
+                <option value="right">Checkbox at right</option>
+            </b-select>-->
+        </b-field>
+
+        <b-tabs>
+            <b-tab-item label="Table">
+                <b-table
+                    :data="data"
+                    :columns="columns"
+                    :checked-rows.sync="checkedRows"
+                    :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
+                    checkable
+                    :checkbox-position="checkboxPosition">
+
+                    <!--<template slot="bottom-left">
+                        <b>Total checked</b>: {{ checkedRows.length }}
+                    </template>-->
+                </b-table>
+            </b-tab-item>
+
+            <!--<b-tab-item label="Checked rows">
+                <pre>{{ checkedRows }}</pre>
+            </b-tab-item>-->
+        </b-tabs>
+    </section>
+</template>
+<!--<template>
   <section>
     <div id="bookings">
       <navbar></navbar>
-      <div class="columns is-centered" style="padding: 20px">     
+      <div class="columns is-centered" style="padding: 20px"> 
+
         <div class="column is-11">
+        <button class="button field is-danger" @click="checkedRows = []"
+                :disabled="!checkedRows.length">
+                <b-icon icon="close"></b-icon>
+                <span>Clear checked</span>
+            </button>
           <div class="table">
-            <b-table hoverable @click="showPortal" :data="data" :columns="columns"></b-table>
+          
+            <b-table :checked-rows.sync="checkedRows" checkable hoverable @click="showPortal" :data="data" :columns="columns"></b-table>
           </div>        
-          <!-- <b-table
+          <b-table
             :data="isEmpty ? [] : data"
             :bordered="isBordered"
             :striped="isStriped"
@@ -44,15 +87,15 @@
                 </span>
             </b-table-column>
 
-          </b-table>-->
+          </b-table>
         </div>
       </div>
     </div>
   </section>
-</template>
+</template>-->
 
 <script>
-import Navbar from "@/components/organisms/Navbar.vue";
+//import Navbar from "@/components/organisms/Navbar.vue";
 import axios from "axios";
 import { tokenConfig } from "@/auth";
 export default {
@@ -62,10 +105,12 @@ export default {
     }
   },
   components: {
-    navbar: Navbar
+    //navbar: Navbar
   },
   data() {
+  
     return {
+      checkedRows:[],
       data: [{ name: "Test", day: 30, month: "November", year: 2020 }],
       columns: [
         {
