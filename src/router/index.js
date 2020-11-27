@@ -8,6 +8,7 @@ import Login from "../views/Login";
 import Register from "../views/Register";
 import ClientPortalCalendar from "../views/ClientPortalCalendar";
 import ClientPortalConfirmation from "../views/ClientPortalConfirmation";
+import ClientPortalResponse from "../views/ClientPortalResponse";
 import {
   guard
 } from "../auth";
@@ -37,6 +38,11 @@ const routes = [{
     path: "/register",
     name: "Register",
     component: Register,
+  },
+  {
+    path: '/response',
+    name: 'ClientPortalResponse',
+    component: ClientPortalResponse,
   },
   {
     path: "/event/:id",

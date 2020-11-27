@@ -20,6 +20,13 @@
             icon="cog-outline"
             label="Setting"
           ></b-menu-item>
+          <b-menu-item
+            tag="router-link"
+            :to="{name: 'ClientPortalResponse'}"
+            :active="$route.name == 'ClientPortalResponse'"
+            icon="cog-outline"
+            label="ClientPortalResponse"
+          ></b-menu-item>
         </b-menu-list>
       </section>
     </b-menu>

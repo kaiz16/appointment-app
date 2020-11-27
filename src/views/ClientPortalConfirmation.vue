@@ -182,6 +182,22 @@ export default {
           this.$buefy.toast.open("Error");
         } else {
           console.log(data);
+          const params = {
+            event: this.event,
+            eventId: this.$route.params.id,
+            username: this.username,
+            name: this.name,
+            email: this.email.toLowerCase(),
+            day: this.day,
+            month: this.month,
+            year: this.year,
+            hour: this.hour,
+            minutes: this.minutes
+          };
+          this.$router.push({
+            name: "ClientPortalResponse",
+            params
+          });
         }
       }
     }
