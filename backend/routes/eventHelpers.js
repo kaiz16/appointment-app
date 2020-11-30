@@ -11,9 +11,19 @@ const getAvailableTimes = (event, day, month, year) => {
   }
 
   const date = new Date()
-  if (day < date.getDate()) {
+  // return empty if year is not equal to current year
+  if (year != date.getFullYear()) {
     return availableTimes
   }
+
+  // if they picked a current year 
+  if (year == date.getFullYear()){
+    // check whether day & month is valid
+    if (day < date.getDate() || month < date.getMonth() + 1){
+      return availableTimes
+    }
+  }
+
 
   const weekDay = moment(`${year}-${month}-${day}`).format('dddd')
 
