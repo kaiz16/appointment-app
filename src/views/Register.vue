@@ -91,19 +91,22 @@ export default {
           position: "is-bottom"
         });
       } else {
-        const data = await axios({
-          url: "auth/register",
-          method: "POST",
-          data: {
-            username: this.username,
-            email: this.email.toLowerCase(),
-            password: this.password
-          }
-        });
-        if (data.data.error) {
-          return;
-        } else {
-          this.$router.push("/login");
+        try {
+          await axios({
+            url: "auth/register",
+            method: "POST",
+            data: {
+              username: this.username,
+              email: this.email.toLowerCase(),
+              password: this.password
+            }
+          })
+        } catch (error) {
+          this.$buefy.toast.open({
+            message: `<b>${error.response.data}</b>`,
+            type: "is-danger",
+            position: "is-top"
+          });
         }
       }
     },

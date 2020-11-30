@@ -172,14 +172,22 @@ export default {
 
   methods: {
     async saveChanges() {
-      // if (day.enabled == false) {
-      //   this.$buefy.toast.open({
-      //     message: "<b>Please Tick At Least 1 Checkbox</b>",
-      //     type: "is-danger",
-      //     queue: true
-      //   });
-      //   location.reload();
-      // } else {
+      const schedules = this.currentSchedules.filter(
+        day => {
+          if (day.enabled == true){
+            return day
+          }
+        }
+      )
+
+      if (schedules.length == 0){
+        this.$buefy.toast.open({
+          message: "<b>Please Tick At Least 1 Checkbox</b>",
+          type: "is-danger",
+          queue: true
+        });
+        return
+      }
       this.currentSchedules.forEach(d => {
         let sH;
         let sM;
@@ -222,7 +230,6 @@ export default {
         console.log(data);
         location.reload();
       }
-      // }
     }
   }
 };

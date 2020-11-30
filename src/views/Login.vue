@@ -76,19 +76,23 @@ export default {
           position: "is-bottom"
         });
       } else {
-        const { data, error } = await axios({
-          url: "auth/login",
-          data: {
-            email: this.email.toLowerCase(),
-            password: this.password
-          },
-          method: "POST"
-        });
-        if (error) {
-          this.$buefy.toast.open("Error");
-        } else {
+        try {
+          const { data } = await axios({
+            url: "auth/login",
+            data: {
+              email: this.email.toLowerCase(),
+              password: this.password
+            },
+            method: "POST"
+          })
           localStorage.setItem("auth-token", data.data.token);
           this.$router.push("/dashboard");
+        } catch (error) {
+          this.$buefy.toast.open({
+            message: `<b>${error.response.data}</b>`,
+            type: "is-danger",
+            position: "is-top"
+          });
         }
       }
     },
