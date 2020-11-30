@@ -3,31 +3,21 @@ const Schema = require('../Models')
 const {
     getAvailableTimes
 } = require('./eventHelpers')
+const verifyToken = require('./verifyToken')
 
 
 // Getting the events by user
-router.get('/', (req, res) => {
+router.get('/', verifyToken, (req, res) => {
     Schema.events.find({
         username: req.user.username
     }).then(events => res.json(events))
 })
 
-// Getting the events owner (username) by event id
-router.get('/username/:id', (req, res) => {
-    Schema.events.findOne({
-        _id: req.params.id
-    }).then(events => res.json({
-        username: events.username
-    }))
-})
-
 // Creating an event
-router.post('/create', (req, res) => {
+router.post('/create', verifyToken, (req, res) => {
     const newEvent = new Schema.events({
         username: req.user.username,
         title: req.body.title,
-        schedules: req.body.schedules,
-        duration: req.body.duration
     })
     newEvent.save()
         .then(message => res.json(message))
@@ -40,7 +30,7 @@ router.get('/:id', async (req, res) => {
             _id: req.params.id
         })
 
-        const availableTimes = getAvailableTimes(event, req.body.day, req.body.month, req.body.year)
+        const availableTimes = getAvailableTimes(event, req.query.day, req.query.month, req.query.year)
         res.json({
             event,
             availableTimes
@@ -52,7 +42,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Updating an event (used in settings page)
-router.post('/update/:id', (req, res) => {
+router.post('/update/:id', verifyToken, (req, res) => {
     Schema.events.findById(req.params.id, (err, event) => {
         if (err) {
             return res.status(400).json(err)

@@ -6,17 +6,28 @@ import Bookings from "../views/Bookings.vue";
 import Setting from "../views/Setting.vue";
 import Login from "../views/Login";
 import Register from "../views/Register";
-import ClientPortal from "../views/ClientPortal";
-import ClientConfirmation from "../views/ClientConfirmation";
-import { guard } from "../auth";
+import ClientPortalCalendar from "../views/ClientPortalCalendar";
+import ClientPortalConfirmation from "../views/ClientPortalConfirmation";
+import ClientPortalResponse from "../views/ClientPortalResponse";
+import {
+  guard
+} from "../auth";
+
 Vue.use(VueRouter);
 
-const routes = [
-  {
+
+
+const routes = [{
     path: "*",
     redirect: {
       name: "Dashboard",
     },
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
+    beforeEnter: guard,
   },
   {
     path: "/login",
@@ -29,37 +40,37 @@ const routes = [
     component: Register,
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard,
-    beforeEnter: guard,
+    path: '/response',
+    name: 'ClientPortalResponse',
+    component: ClientPortalResponse,
   },
   {
     path: "/event/:id",
     name: "Event",
     component: Event,
-    beforeEnter: guard,
-    children: [
+    children: [{
+        path: '',
+        name: 'ClientPortal',
+        component: ClientPortalCalendar
+      },
+      {
+        path: 'confirm',
+        name: 'ClientConfirmation',
+        component: ClientPortalConfirmation,
+        props: true,
+      },
       {
         path: "bookings",
         name: "Bookings",
         component: Bookings,
+        beforeEnter: guard,
       },
       {
         path: "setting",
         name: "Setting",
         component: Setting,
+        beforeEnter: guard,
         props: true,
-      },
-      {
-        path: "clientPortal",
-        name: "ClientPortal",
-        component: ClientPortal,
-      },
-      {
-        path: "clientConfirmation",
-        name: "ClientConfirmation",
-        component: ClientConfirmation,
       },
     ],
   },

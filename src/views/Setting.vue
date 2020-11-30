@@ -1,18 +1,27 @@
 <template>
-  <section class="section">
+  <section id="app" class="section">
     <div id="setting">
       <navbar></navbar>
       <div class="meta-section">
         <div class="columns is-multiline">
           <div class="column is-three-quarters">
-            <b-field label="Class Name" type="is-dark">
-              <b-input v-model="clonedEvent.title" placeholder="Type Class Name"></b-input>
+            <b-field label="Class Name">
+              <b-input
+                required
+                aria-required="true"
+                v-model="clonedEvent.title"
+                placeholder="Type Class Name"
+                type="is-danger"
+              ></b-input>
             </b-field>
           </div>
 
           <div class="column is-three-quarters">
             <b-field label="Your Appointment Form URL" type="is-dark">
-              <b-input v-model="clonedEvent._id" placeholder="Change Your Custom URL"></b-input>
+              <a
+                :href="'http://localhost:8080/event/' + clonedEvent._id"
+                target="_blank"
+              >{{'http://localhost:8080/event/' + clonedEvent._id}}</a>
             </b-field>
           </div>
 
@@ -52,7 +61,16 @@
         <div class="columns">
           <div class="column is-narrow">
             <b-field label="Duration (Minutes)" type="is-dark">
-              <b-input v-model="clonedEvent.duration" placeholder="How Long Is The Session"></b-input>
+              <b-input
+                required
+                v-model="clonedEvent.duration"
+                type="number"
+                placeholder="Duration"
+                validation-message="*required 1 ~ 180"
+                min="1"
+                max="180"
+                pattern="[1-180]*"
+              ></b-input>
             </b-field>
           </div>
         </div>
@@ -89,6 +107,7 @@ import Navbar from "@/components/organisms/Navbar.vue";
 import axios from "axios";
 import { tokenConfig } from "@/auth";
 export default {
+  el: "#app",
   props: {
     event: {
       type: Object,
@@ -100,7 +119,7 @@ export default {
   },
   data() {
     return {
-      clonedEvent: "",
+      clonedEvent: {},
       time: "",
       days: [
         "Monday",
@@ -153,6 +172,14 @@ export default {
 
   methods: {
     async saveChanges() {
+      // if (day.enabled == false) {
+      //   this.$buefy.toast.open({
+      //     message: "<b>Please Tick At Least 1 Checkbox</b>",
+      //     type: "is-danger",
+      //     queue: true
+      //   });
+      //   location.reload();
+      // } else {
       this.currentSchedules.forEach(d => {
         let sH;
         let sM;
@@ -193,7 +220,9 @@ export default {
         this.$buefy.toast.open("Error");
       } else {
         console.log(data);
+        location.reload();
       }
+      // }
     }
   }
 };

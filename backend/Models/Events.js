@@ -15,7 +15,7 @@ const scheduleSchema = new mongoose.Schema({
 })
 const events = mongoose.model('Events', 
     new mongoose.Schema({
-        username: { type: String, required: true, unique: true },
+        username: { type: String, required: true },
         title: { type: String, required: true },
         description: { type: String, default: '' },
         meetingType:  { type: String, validate: {

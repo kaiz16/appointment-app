@@ -24,11 +24,7 @@ export default {
   },
   data() {
     return {
-      data: [
-        { name: "Ballet", duration: "30 minutes", view: 0, booked: 0 },
-        { name: "MyDanceComp", duration: "30 minutes", view: 12, booked: 4 },
-        { name: "Yoga", duration: "30 minutes", view: 50, booked: 10 }
-      ],
+      data: [],
       columns: [
         {
           field: "title",
@@ -55,6 +51,7 @@ export default {
   },
   async mounted() {
     const { data, error } = await axios({
+      method: "GET",
       url: "events/",
       headers: tokenConfig()
     });

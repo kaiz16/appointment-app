@@ -2,11 +2,16 @@ const moment = require("moment");
 // middleware to get available times for events
 const getAvailableTimes = (event, day, month, year) => {
   const availableTimes = []
-  if (!event){
+  if (!event) {
     return availableTimes
   }
-      
-  if (!day || !month || !year){
+
+  if (!day || !month || !year) {
+    return availableTimes
+  }
+
+  const date = new Date()
+  if (day < date.getDate()) {
     return availableTimes
   }
 
@@ -23,24 +28,25 @@ const getAvailableTimes = (event, day, month, year) => {
 
 
   const duration = parseInt(event.duration)
-  
+
   availableTimes.push(startTime.format('HHmm'))
 
-  
-  
-  while (true){
+
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
     const lastItem = availableTimes[availableTimes.length - 1]
     let hour = lastItem.substring(0, 2)
     let minute = lastItem.substring(2, 4)
 
     const time = moment(`${hour}${minute}`, "HH:mm").add(duration, 'm');
     const newTime = time.format('HHmm')
-    
-    if (endTime.diff(moment(time, "HH:mm"), 'minutes') < duration){
+
+    if (endTime.diff(moment(time, "HH:mm"), 'minutes') < duration) {
       return availableTimes
     }
 
-    if (moment(time, "HH:mm").isSameOrAfter(endTime)){
+    if (moment(time, "HH:mm").isSameOrAfter(endTime)) {
       return availableTimes
     }
     availableTimes.push(newTime)

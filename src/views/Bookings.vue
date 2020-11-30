@@ -1,11 +1,11 @@
 <template>
-  <section>
+  <section id="app">
     <div id="bookings">
       <navbar></navbar>
       <div class="columns is-centered" style="padding: 20px">
         <div class="column is-11">
           <div class="table">
-            <b-table :data="bookings" :columns="columns"></b-table>
+            <b-table hoverable @click="showPortal" :data="data" :columns="columns"></b-table>
           </div>
           <!-- <b-table
             :data="isEmpty ? [] : data"
@@ -56,6 +56,7 @@ import Navbar from "@/components/organisms/Navbar.vue";
 import axios from "axios";
 import { tokenConfig } from "@/auth";
 export default {
+  el:"#app",
   props: {
     event: {
       type: Object
@@ -66,7 +67,7 @@ export default {
   },
   data() {
     return {
-      bookings: [],
+      data: [],
       columns: [
         {
           field: "name",
@@ -74,18 +75,15 @@ export default {
         },
         {
           field: "day",
-          label: "Day",
-          numeric: true
+          label: "Day"
         },
         {
           field: "month",
-          label: "Month",
-          numeric: true
+          label: "Month"
         },
         {
           field: "year",
-          label: "Year",
-          numeric: true
+          label: "Year"
         }
       ]
     };
@@ -111,13 +109,24 @@ export default {
   },
   async mounted() {
     const { data, error } = await axios({
-      url: "bookings/" + this.event._id,
+      url: "bookings/" + this.$route.params.id,
+      method: "GET",
       headers: tokenConfig()
     });
     if (error) {
       this.$buefy.toast.open("Error");
     } else {
-      this.bookings = data;
+      this.data = data;
+    }
+  },
+  methods: {
+    showPortal(event) {
+      this.$router.push({
+        name: "ClientPortal",
+        param: {
+          id: event._id
+        }
+      });
     }
   }
 };
