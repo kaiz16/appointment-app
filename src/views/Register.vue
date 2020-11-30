@@ -4,15 +4,33 @@
       <div class="column">
         <div class="border">
           <b-field label="Username">
-            <b-input required v-model="username" value></b-input>
+            <b-input
+              required
+              aria-required="true"
+              v-model="username"
+              placeholder="Input your Username"
+              type="is-danger"
+            ></b-input>
           </b-field>
 
-          <b-field label="Email" type="is-danger">
-            <b-input required v-model="email" type="email" value></b-input>
+          <b-field label="Email">
+            <b-input
+              required
+              aria-required="true"
+              v-model="email"
+              type="email"
+              placeholder="Input your Email"
+            ></b-input>
           </b-field>
 
-          <b-field label="Password" type="is-danger">
-            <b-input required v-model="password" type="password" placeholder="Input your password"></b-input>
+          <b-field label="Password">
+            <b-input
+              required
+              aria-required="true"
+              v-model="password"
+              type="password"
+              placeholder="Input your Password"
+            ></b-input>
           </b-field>
 
           <a @click="takeMeToLogin">Already have an account? Login!</a>
@@ -22,7 +40,9 @@
               <label class="checkbox">
                 <input type="checkbox" />
                 By submitting this form, I agree to booking's
-                <a href="#">Term & Condition</a> and
+                <a
+                  href="#"
+                >Term & Condition</a> and
                 <a href="#">Privacy Policy</a>.
               </label>
             </div>
@@ -42,7 +62,7 @@
 import axios from "axios";
 
 export default {
-    name: "Register",
+  name: "Register",
   data() {
     return {
       username: "",
@@ -52,19 +72,39 @@ export default {
   },
   methods: {
     async submit() {
-      const data = await axios({
-        url: "auth/register",
-        method: "POST",
-        data: {
-          username: this.username,
-          email: this.email.toLowerCase(),
-          password: this.password
-        }
-      });
-      if (data.data.error) {
-        return
+      if (this.username == null || this.username == "") {
+        this.$buefy.toast.open({
+          message: "<b>Your Username Can't Be Empty</b>",
+          type: "is-danger",
+          position: "is-bottom"
+        });
+      } else if (this.email == null || this.email == "") {
+        this.$buefy.toast.open({
+          message: "<b>Your Email Can't Be Empty</b>",
+          type: "is-danger",
+          position: "is-bottom"
+        });
+      } else if (this.password == null || this.password == "") {
+        this.$buefy.toast.open({
+          message: "<b>Your Password Can't Be Empty</b>",
+          type: "is-danger",
+          position: "is-bottom"
+        });
       } else {
-        this.$router.push("/login");
+        const data = await axios({
+          url: "auth/register",
+          method: "POST",
+          data: {
+            username: this.username,
+            email: this.email.toLowerCase(),
+            password: this.password
+          }
+        });
+        if (data.data.error) {
+          return;
+        } else {
+          this.$router.push("/login");
+        }
       }
     },
     takeMeToLogin() {

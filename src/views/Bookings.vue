@@ -99,6 +99,7 @@
 import axios from "axios";
 import { tokenConfig } from "@/auth";
 export default {
+  el:"#app",
   props: {
     event: {
       type: Object
