@@ -1,7 +1,7 @@
 <template>
   <section class="vbox">
     <div class="columns is-centered">
-      <div class="column is-half">
+      <div class="column is-half" style="width: 660px;">
         <div id class="client-appointments">
           <div id class="client-card">
             <div id class="client-padding">
@@ -13,7 +13,7 @@
                   <div
                     style="color: rgb(225, 236, 254); position: absolute; height: 55px; top: 25px; right: 15px;"
                   >
-                    <b-tooltip label="Carmen Choo">
+                    <b-tooltip :label="event.username">
                       <b-button
                         rounded
                         size="is-medium"
@@ -24,11 +24,17 @@
                       ></b-button>
                     </b-tooltip>
                   </div>
-                  <h2 class="title" style="color: rgb(225, 236, 254); padding-top: 4rem;">{{event.title}} by {{event.username}}</h2>
+                  <h2
+                    class="title"
+                    style="color: rgb(225, 236, 254); padding-top: 4rem;"
+                  >{{event.title}} by {{event.username}}</h2>
                   <p style="color: rgb(225, 236, 254); font-weight: 600;"></p>
                   <p class="title-loacation" style="color: rgb(225, 236, 254);">
                     Location:
-                    <span class="tl" style="font-weight: 600;">{{event.meetingType}} Meeting</span>
+                    <span
+                      class="tl"
+                      style="font-weight: 600;"
+                    >{{event.meetingType}} Meeting</span>
                   </p>
                   <p class="title-duration" style="color: rgb(225, 236, 254);">
                     Duration:
@@ -36,18 +42,30 @@
                   </p>
                   <p class="title-time" style="color: rgb(225, 236, 254);">
                     When:
-                    <span class="tt" style="font-weight: 600;">{{moment(`${year}-${month}-${day}T${hour}:${minutes}:00`).calendar()}}</span>
+                    <span
+                      class="tt"
+                      style="font-weight: 600;"
+                    >{{moment(`${year}-${month}-${day}T${hour}:${minutes}:00`).calendar()}}</span>
                   </p>
                 </div>
               </div>
               <div class="name" style="padding: 1rem !important;">
                 <b-field label="Full Name">
-                  <b-input v-model="name" placeholder="Your Fullname"></b-input>
+                  <b-input v-model="name" placeholder="Your Fullname" required></b-input>
                 </b-field>
               </div>
-              <div class="email" style="padding: 1rem !important;">
-                <b-field label="Email" type="is-danger" message="This email is invalid">
-                  <b-input v-model="email" type="email" placeholder="Your Emaill" maxlength="30"></b-input>
+              <div :class="['input-group',isEmailValid()]" style="padding: 1rem !important;">
+                <span class="input-group-addon" id="basic-addon1">
+                  <span class="fa fa-envelope"></span>
+                </span>
+                <b-field label="Email">
+                  <b-input
+                    class="form-control"
+                    v-model="email"
+                    type="email"
+                    required
+                    placeholder="Your Emaill"
+                  ></b-input>
                 </b-field>
               </div>
               <div class="field" style="padding: 1rem !important;">
@@ -66,67 +84,106 @@
               </div>
               <div class="columns" style="padding: 1rem !important; padding-left: 6rem !important;">
                 <div class="column is-1">
-                  <b-button type="is-primary" icon-left="arrow-left-bold-outline" @click="goBack" outlined>Back</b-button>
+                  <b-button
+                    type="is-primary"
+                    icon-left="arrow-left-bold-outline"
+                    @click="goBack"
+                    outlined
+                  >Back</b-button>
                 </div>
                 <div class="column is-5 is-offset-7" style="padding: 1rem !important;">
-                  <b-button type="is-success" icon-right="location-enter" @click="confirm" outlined>Confirm</b-button>
+                  <b-button
+                    type="is-success"
+                    icon-right="location-enter"
+                    @click="confirm"
+                    outlined
+                  >Confirm</b-button>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div style="width: 660px; font-size: 0.8rem; text-align: center !important;">
+          Create Your Own
+          <a href style="color: rgb(19, 133, 229);">Appointments Booking Page</a> with
+          <a href style="color: rgb(19, 133, 229);">Appointment App</a>
+        </div>
       </div>
-    </div>
-    <div style="width: 100%; font-size: 0.8rem; text-align: center !important;">
-      Create Your Own
-      <a href style="color: rgb(19, 133, 229);">Appointments Booking Page</a> with
-      <a href style="color: rgb(19, 133, 229);">Appointment App</a>
     </div>
   </section>
 </template>
 
 <script>
-import moment from 'moment'
-import axios from 'axios'
+import moment from "moment";
+import axios from "axios";
 export default {
-props: ['event', 'day', 'month', 'year', 'hour', 'minutes'],
+  props: ["event", "day", "month", "year", "hour", "minutes"],
   data() {
     return {
-      name: null,
-      email: null,
-      gdpr: 'default',
-      marketing: 'default'
-    }
+      moment: moment,
+      name: "",
+      email: "",
+      gdpr: "default",
+      marketing: "default"
+    };
   },
-  beforeCreate(){
-      this.moment = moment
+  beforeCreate() {
+    this.moment = moment;
   },
   methods: {
-      goBack(){
-          this.$router.push({
-              name: "ClientPortal"
-          })
-      },
-      async confirm(){
+    goBack() {
+      this.$router.push({
+        name: "ClientPortal"
+      });
+    },
+    isEmailValid() {
+      return this.email == ""
+        ? ""
+        : this.reg.test(this.email)
+        ? "has-success"
+        : "has-error";
+    },
+    async confirm() {
+      // eslint-disable-next-line no-useless-escape
+      const reg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (this.name == null || this.name == "") {
+        this.$buefy.toast.open({
+          message: "<b>Your Name Can't Be Empty</b>",
+          type: "is-danger"
+        });
+      } else if (this.email == null || this.email == "") {
+        this.$buefy.toast.open({
+          message: "<b>Your Email Can't Be Empty</b>",
+          type: "is-danger"
+        });
+      } else if (!reg.test(this.email)) {
+        this.$buefy.toast.open({
+          message: "<b>Please Enter Correct Email</b>",
+          type: "is-danger"
+        });
+      } else {
         const { data, error } = await axios({
-            url: "bookings/create",
-            data: {
-                eventId: this.$route.params.id,
-                name: this.name,
-                email: this.email,
-                day: this.day,
-                month: this.month,
-                year: this.year,
-                hour: this.hour,
-                minutes: this.minutes
-            },
-            method: "POST"
+          url: "bookings/create",
+          data: {
+            eventId: this.$route.params.id,
+            username: this.username,
+            name: this.name,
+            email: this.email.toLowerCase(),
+            day: this.day,
+            month: this.month,
+            year: this.year,
+            hour: this.hour,
+            minutes: this.minutes
+          },
+          method: "POST"
         });
         if (error) {
-            this.$buefy.toast.open("Error");
+          this.$buefy.toast.open("Error");
         } else {
-            console.log(data);
+          console.log(data);
         }
+      }
     }
   }
 };
@@ -148,11 +205,11 @@ props: ['event', 'day', 'month', 'year', 'hour', 'minutes'],
   align-content: flex-start;
 }
 .client-appointments {
-  height: 100%;
-  min-height: 100%;
+  height: 635px;
+
   font-family: "Source Sans Pro", sans-serif;
   font-size: 16px;
-  line-height: 1.5;
+
   text-size-adjust: 100%;
   margin: 0;
   background-color: #fff;
@@ -188,5 +245,9 @@ props: ['event', 'day', 'month', 'year', 'hour', 'minutes'],
   font-weight: 600;
   margin-bottom: 0.625rem !important;
   margin-top: 0.625rem !important;
+}
+
+.footer {
+  width: 660px;
 }
 </style>

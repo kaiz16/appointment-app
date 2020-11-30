@@ -5,9 +5,9 @@ const {
 } = require('./eventHelpers')
 const verifyToken = require('./verifyToken')
 // Getting the bookings by the event id
-router.get('/', verifyToken, (req, res) => {
+router.get('/:id', verifyToken, (req, res) => {
     Schema.bookings.find({
-        username: req.user.username
+        eventId: req.params.id
     }).then(bookings => res.json(bookings))
 })
 
@@ -37,6 +37,7 @@ router.post('/create', async (req, res) => {
 
         const newBooking = new Schema.bookings({
             eventId: req.body.eventId,
+            username: event.username,
             name: req.body.name,
             email: req.body.email,
             phone: req.body.phone,
@@ -48,10 +49,10 @@ router.post('/create', async (req, res) => {
         })
 
         newBooking.save().then(booking => res.json(booking))
-            .catch(err => res.status(400).json(err))
+            .catch(err => res.status(401).json(err))
 
     } catch (error) {
-        return res.status(400).json(error)
+        return res.status(402).json(error)
     }
 })
 

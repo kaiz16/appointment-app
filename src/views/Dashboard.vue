@@ -24,11 +24,7 @@ export default {
   },
   data() {
     return {
-      data: [
-        { title: "Ballet", duration: "30 minutes", view: 0, booked: 0 },
-        { title: "MyDanceComp", duration: "30 minutes", view: 12, booked: 4 },
-        { title: "Yoga", duration: "30 minutes", view: 50, booked: 10 }
-      ],
+      data: [],
       columns: [
         {
           field: "title",

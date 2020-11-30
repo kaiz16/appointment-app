@@ -153,7 +153,7 @@ export default {
   },
   async mounted() {
     const { data, error } = await axios({
-      url: "bookings/",
+      url: "bookings/" + this.$route.params.id,
       method: "GET",
       headers: tokenConfig()
     });

@@ -12,9 +12,10 @@
 
           <div class="column is-three-quarters">
             <b-field label="Your Appointment Form URL" type="is-dark">
-              <a :href="'http://localhost:8080/event/' + clonedEvent._id" target="_blank">
-                {{'http://localhost:8080/event/' + clonedEvent._id}}
-              </a>
+              <a
+                :href="'http://localhost:8080/event/' + clonedEvent._id"
+                target="_blank"
+              >{{'http://localhost:8080/event/' + clonedEvent._id}}</a>
             </b-field>
           </div>
 
@@ -54,7 +55,16 @@
         <div class="columns">
           <div class="column is-narrow">
             <b-field label="Duration (Minutes)" type="is-dark">
-              <b-input v-model="clonedEvent.duration" placeholder="How Long Is The Session"></b-input>
+              <b-input
+                required
+                v-model="clonedEvent.duration"
+                type="number"
+                placeholder="Duration"
+                validation-message="*required 1 ~ 180"
+                min="1"
+                max="180"
+                pattern="[1-180]*"
+              ></b-input>
             </b-field>
           </div>
         </div>
@@ -102,7 +112,7 @@ export default {
   },
   data() {
     return {
-      clonedEvent: "",
+      clonedEvent: {},
       time: "",
       days: [
         "Monday",

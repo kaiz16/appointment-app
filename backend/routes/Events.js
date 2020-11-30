@@ -13,15 +13,6 @@ router.get('/', verifyToken, (req, res) => {
     }).then(events => res.json(events))
 })
 
-// Getting the events owner (username) by event id
-router.get('/username/:id', (req, res) => {
-    Schema.events.findOne({
-        _id: req.params.id
-    }).then(events => res.json({
-        username: events.username
-    }))
-})
-
 // Creating an event
 router.post('/create', verifyToken, (req, res) => {
     const newEvent = new Schema.events({

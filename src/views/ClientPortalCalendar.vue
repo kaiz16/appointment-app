@@ -1,7 +1,7 @@
 <template>
   <section class="vbox" v-if="event">
     <div class="columns is-centered">
-      <div class="column is-half">
+      <div class="column is-half" style="width: 660px;">
         <div id class="client-appointments">
           <div id class="client-card">
             <div id class="client-padding">
@@ -10,11 +10,31 @@
                 style="padding: 1rem; color: rgb(225, 236, 254); background-image: linear-gradient(242deg, rgb(63, 81, 181) 0%, rgb(156, 39, 176) 100%);"
               >
                 <div style="position: relative;">
-                  <h2 class="title" style="color: rgb(225, 236, 254); padding-top: 4rem;">{{event.title}} by {{event.username}}</h2>
+                  <div
+                    style="color: rgb(225, 236, 254); position: absolute; height: 55px; top: 25px; right: 15px;"
+                  >
+                    <b-tooltip :label="event.username">
+                      <b-button
+                        rounded
+                        size="is-medium"
+                        type="is-primary"
+                        style="border-radius: 100%;"
+                        icon-left="account"
+                        outlined
+                      ></b-button>
+                    </b-tooltip>
+                  </div>
+                  <h2
+                    class="title"
+                    style="color: rgb(225, 236, 254); padding-top: 4rem;"
+                  >{{event.title}} by {{event.username}}</h2>
                   <p style="color: rgb(225, 236, 254); font-weight: 600;"></p>
                   <p class="title-loacation" style="color: rgb(225, 236, 254);">
                     Location:
-                    <span class="tl" style="font-weight: 600;">{{event.meetingType}} Meeting</span>
+                    <span
+                      class="tl"
+                      style="font-weight: 600;"
+                    >{{event.meetingType}} Meeting</span>
                   </p>
                   <p class="title-duration" style="color: rgb(225, 236, 254);">
                     Duration:
@@ -23,47 +43,52 @@
                 </div>
               </div>
               <div class="columns" style="height: 455px;">
-                <div class="column is-narrow" style="height: 430px;">
+                <div class="column is-narrow" style="height: 430px; float: left;">
                   <b-datepicker inline v-model="date" :events="events" size="is-medium"></b-datepicker>
                 </div>
                 <div
                   class="column is-4"
-                  style="height: 90%; overflow-y: scroll; margin-top: .875rem !important;"
+                  style="height: 93%; overflow-y: scroll; margin-top: .875rem !important; float: left;"
                 >
                   <div class="buttons">
-                    <b-button type="is-primary" 
-                        @click="confirmApplication(time)"
-                        expanded 
-                        outlined 
-                        v-for="time in availableTimes" :key="time">
-                        {{moment(time, "HH:mm").format('hh:mm A')}}
-                    </b-button>
-                    <p class="title is-5 has-text-centered" v-if="availableTimes.length == 0">Not available</p>
+                    <b-button
+                      type="is-primary"
+                      @click="confirmApplication(time)"
+                      expanded
+                      outlined
+                      v-for="time in availableTimes"
+                      :key="time"
+                    >{{moment(time, "HH:mm").format('hh:mm A')}}</b-button>
+                    <p
+                      class="title is-5 has-text-centered"
+                      v-if="availableTimes.length == 0"
+                    >No Available Slots Try Another Day</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div style="width: 660px; font-size: 0.8rem; text-align: center !important;">
+          Create Your Own
+          <a href style="color: rgb(19, 133, 229);">Appointments Booking Page</a> with
+          <a href style="color: rgb(19, 133, 229);">Appointment App</a>
+        </div>
       </div>
-    </div>
-    <div style="width: 100%; font-size: 0.8rem; text-align: center !important;">
-      Create Your Own
-      <a href style="color: rgb(19, 133, 229);">Appointments Booking Page</a> with
-      <a href style="color: rgb(19, 133, 229);">Appointment App</a>
     </div>
   </section>
 </template>
 
 <script>
-import moment from 'moment'
+import moment from "moment";
 import axios from "axios";
 const thisMonth = new Date().getMonth();
 const thisYear = new Date().getFullYear();
-const thisDay = new Date().getDate()
+const thisDay = new Date().getDate();
 export default {
   data() {
     return {
+      moment: moment,
       event: null,
       availableTimes: null,
       date: null,
@@ -71,54 +96,39 @@ export default {
     };
   },
   watch: {
-      date: async function(date){
-          const { data } = await axios({
-              url: "events/" + this.$route.params.id,
-              params: {
-                  day: date.getDate(),
-                  month: date.getMonth() + 1,
-                  year: date.getFullYear()
-              }
-          })
-        this.event = data.event
-        this.availableTimes = data.availableTimes
-      }
+    date: async function(date) {
+      const { data } = await axios({
+        url: "events/" + this.$route.params.id,
+        params: {
+          day: date.getDate(),
+          month: date.getMonth() + 1,
+          year: date.getFullYear()
+        }
+      });
+      this.event = data.event;
+      this.availableTimes = data.availableTimes;
+    }
   },
-  beforeCreate(){
-      this.moment = moment
+  beforeCreate() {
+    this.moment = moment;
   },
-  mounted(){
-      this.date = new Date(thisYear, thisMonth, thisDay)
+  mounted() {
+    this.date = new Date(thisYear, thisMonth, thisDay);
   },
   methods: {
-    confirmApplication(time){
-        const params = {
-                event: this.event,
-                day: this.date.getDate(),
-                month: this.date.getMonth() + 1,
-                year: this.date.getFullYear(),
-                hour: moment(time, "HHmm").get('hour'),
-                minutes: moment(time, "HHmm").get('minutes')
-        }
-        this.$router.push({
-            name: 'ClientConfirmation',
-            params,
-        })
-    },
-    async findUsername() {
-      const { username, error } = await axios({
-        url: "events/username/:id",
-        params: {
-          _id: this.$route.params.id
-        },
-        method: "GET"
+    confirmApplication(time) {
+      const params = {
+        event: this.event,
+        day: this.date.getDate(),
+        month: this.date.getMonth() + 1,
+        year: this.date.getFullYear(),
+        hour: moment(time, "HHmm").get("hour"),
+        minutes: moment(time, "HHmm").get("minutes")
+      };
+      this.$router.push({
+        name: "ClientConfirmation",
+        params
       });
-      if (error) {
-        this.$buefy.toast.open("Error");
-      } else {
-        print(this.username);
-        return (this.username.username.data = username);
-      }
     }
   }
 };
