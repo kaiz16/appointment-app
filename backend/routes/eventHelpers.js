@@ -11,7 +11,7 @@ const getAvailableTimes = (event, day, month, year) => {
   }
 
   const date = new Date()
-  if (day < date.getDate()) {
+  if (day < date.getDate() && month < (date.getMonth() + 1) && year < date.getFullYear()) {
     return availableTimes
   }
 
