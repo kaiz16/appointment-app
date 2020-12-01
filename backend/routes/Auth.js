@@ -6,37 +6,43 @@ const verifyToken = require("./verifyToken");
 
 // login route
 router.post("/login", async (req, res) => {
-  const user = await Schema.users.findOne({
-    email: req.body.email
-  });
-  // throw error when email is wrong
-  if (!user) return res.status(400).json({
-    error: "Email is wrong"
-  });
-  // check for password correctness
-  const validPassword = await bcrypt.compare(req.body.password, user.password);
-
-  if (!validPassword)
-    return res.status(400).json({
-      error: "Password is wrong"
+  try {
+    const user = await Schema.users.findOne({
+      email: req.body.email
     });
 
-  // create token
-  const token = jwt.sign(
-    // payload data
-    {
-      username: user.username,
-      id: user._id,
-    },
-    process.env.TOKEN_SECRET
-  );
+    // throw error when email is wrong
+    if (!user) {
+      throw 'Email is wrong'
+    }
 
-  res.header("auth-token", token).json({
-    error: null,
-    data: {
-      token,
-    },
-  });
+    // check for password correctness
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    
+    if (!validPassword){
+      throw 'Password is wrong'
+    }
+
+    // create token
+    const token = jwt.sign(
+      // payload data
+      {
+        username: user.username,
+        id: user._id,
+      },
+      process.env.TOKEN_SECRET
+    );
+
+    res.header("auth-token", token).json({
+      error: null,
+      data: {
+        token,
+      },
+    });
+
+  } catch (error) {
+    return res.status(400).send(error)
+  }
 });
 
 router.get("/verifyToken", async (req, res) => {
@@ -51,44 +57,40 @@ router.get("/verifyToken", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  const isUsernameExist = await Schema.users.findOne({
-    username: req.body.username
-  });
-
-  if (isUsernameExist)
-    return res.status(400).json({
-      error: "Username already exists"
-    });
-
-  const isEmailExist = await Schema.users.findOne({
-    email: req.body.email
-  });
-
-  if (isEmailExist)
-    return res.status(400).json({
-      error: "Email already exists"
-    });
-
-  // hash the password
-  const salt = await bcrypt.genSalt(10);
-  const password = await bcrypt.hash(req.body.password, salt);
-
-  const user = new Schema.users({
-    username: req.body.username,
-    email: req.body.email,
-    password,
-  });
-
   try {
+    const isUsernameExist = await Schema.users.findOne({
+      username: req.body.username
+    });
+
+    if (isUsernameExist) {
+      throw 'Username already exist'
+    }
+
+    const isEmailExist = await Schema.users.findOne({
+      email: req.body.email
+    });
+
+    if (isEmailExist){
+      throw 'Email already exist'
+    }
+
+    // hash the password
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(req.body.password, salt);
+
+    const user = new Schema.users({
+      username: req.body.username,
+      email: req.body.email,
+      password,
+    });
+
     const savedUser = await user.save();
     res.json({
       error: null,
       data: savedUser
     });
   } catch (error) {
-    res.status(400).json({
-      error
-    });
+    return res.status(400).send(error)
   }
 });
 

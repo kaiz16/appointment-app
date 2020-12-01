@@ -15,6 +15,15 @@ router.post('/create', async (req, res) => {
     // Find the event
     try {
         const event = await Schema.events.findById(req.body.eventId)
+        if (!event) throw "Event does not exist"
+        const isBookingExist = await Schema.bookings.find({
+            eventId: req.body.eventId,
+            email: req.body.email,
+        })
+        
+        if (isBookingExist){
+            throw "Booking already exist"
+        }
         const availableTimes = getAvailableTimes(event, req.body.day, req.body.month, req.body.year)
 
         let hour = req.body.hour
@@ -52,7 +61,7 @@ router.post('/create', async (req, res) => {
             .catch(err => res.status(401).json(err))
 
     } catch (error) {
-        return res.status(402).json(error)
+        return res.status(400).json(error)
     }
 })
 
